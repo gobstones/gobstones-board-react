@@ -1,4 +1,5 @@
 import React from "react";
+import Cell from "./Cell";
 
 type BoardState = {
     columnsQuantity: number;
@@ -28,6 +29,25 @@ export class Board extends React.Component<BoardProps, BoardState> {
                 <TopLeftCorner/>
                 {this.mapColumns()}
                 <TopRightCorner/>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <Cell/>
+                </td>
+                <td>
+                    <Cell/>
+                </td>
+                <td>
+                    <Cell/>
+                </td>
+                <td>
+                    <Cell/>
+                </td>
+                <td>
+                    <Cell/>
+                </td>
             </tr>
             </tbody>
         </table>;
