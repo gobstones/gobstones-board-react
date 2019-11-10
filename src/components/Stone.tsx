@@ -45,7 +45,7 @@ class Stone extends React.Component<StoneProps, StoneState> {
             if (this.state.amount.value > 0) {
                 return "gbs_pointer";
             } else {
-                return "gbs_ghost-" + this.props.color;
+                return "gbs_hidden gbs_ghost-" + this.props.color;
             }
         } else {
             return "";
@@ -85,19 +85,10 @@ class Stone extends React.Component<StoneProps, StoneState> {
 
     render() {
         return (
-            <div onClick={() => this.leftClick()} className={`gbs_color-${this.props.color} gbs_stone gbs_tooltip gbs_${this.props.color} ${this.cssClass()}`}>
+            <div onClick={() => this.leftClick()} className={`  gbs_color-${this.props.color} gbs_stone gbs_tooltip gbs_${this.props.color} ${this.cssClass()} `}>
                 <span className="gbs_stone_amount">{this.amountText(this.state.amount.value)}</span>
             </div>
         );
-    }
-
-    private renderInvisibleStone() {
-        return (
-            <img
-                className={` gbs_stone gbs_O ${this.cssClass()} `}
-                src={this.getImageSource()} alt="" onClick={() => this.leftClick()}/>
-        )
-
     }
 }
 

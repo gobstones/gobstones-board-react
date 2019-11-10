@@ -28,7 +28,7 @@ div.gbs_gc {
 table.gbs_gc {
   /* cell table */
   border-style: none;
-  border: solid black 0px;
+  border: solid rgb(240, 217, 217) 0px;
 }
 
 .gbs_gc tr {
@@ -48,6 +48,13 @@ table.gbs_gc {
 
 .gbs_gc td div {
   line-height: 2;
+}
+
+.border{
+  border-style: solid;
+  border-width: 0.1px;
+  border-color: #888;
+  border-collapse: collapse
 }
 
 /*# sourceMappingURL=style.css.map */

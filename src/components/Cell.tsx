@@ -1,12 +1,31 @@
 import React from "react";
 import Stone from "./Stone";
 
-export default class Cell extends React.Component<{}, {}> {
+type CellState ={
+    isHeader : boolean;
+}
+
+type CellProps ={}
+
+export default class Cell extends React.Component<CellProps, CellState> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            isHeader : false,
+        }
+    }
+
+    cssClass(){
+        if(this.state.isHeader){
+            return "gbs_gh"
+        }
+    }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
-            <div className={"gbs_gc"}>
-                <table>
+            <div className="gbs_gc border">
+                <table className={this.cssClass()}>
                     <tbody>
                     <tr>
                         <td>

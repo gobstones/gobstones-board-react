@@ -37,7 +37,10 @@
 }
 
 .gbs_hidden {
-    visibility: hidden;
+    opacity : 0
+}
+.gbs_hidden:hover {
+    visibility: visible;
 }
 
 .gbs_stone {
