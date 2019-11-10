@@ -5,14 +5,16 @@ type CellState ={
     isHeader : boolean;
 }
 
-type CellProps ={}
+type CellProps ={
+    isHeader : boolean
+}
 
 export default class Cell extends React.Component<CellProps, CellState> {
 
     constructor(props: any) {
         super(props);
         this.state = {
-            isHeader : false,
+            isHeader : props.isHeader,
         }
     }
 

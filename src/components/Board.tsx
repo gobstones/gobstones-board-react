@@ -4,8 +4,18 @@ import Cell from "./Cell";
 type BoardState = {
     columnsQuantity: number;
     rowsQuantity : number;
+    header : Header;
 }
-type BoardProps = {}
+
+type Header = {
+    x : number,
+    y : number,
+}
+type BoardProps = {
+    columnsQuantity : number,
+    rowsQuantity : number,
+    header : Header,
+}
 
 type BorderProps = {
     index :number;
@@ -40,8 +50,9 @@ export class Board extends React.Component<BoardProps, BoardState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            columnsQuantity: 5,
-            rowsQuantity : 5,
+            columnsQuantity: props.columnsQuantity,
+            rowsQuantity : props.rowsQuantity,
+            header : props.header || {x : 0, y :0}
         }
     }
 
@@ -73,19 +84,23 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
     private mapRaws(){
         // @ts-ignore
-        return [...Array(this.state.rowsQuantity).keys()].map(index => 
-        <tbody key={index}>
+        return [...Array(this.state.rowsQuantity).keys()].reverse().map(coordY => 
+        <tbody key={coordY}>
           <tr>
-            <LeftBorder index={index} />
-            {this.mapColumnsContent()}
-            <RightBorder index={index} />
+            <LeftBorder index={coordY} />
+            {this.mapColumnsContent(coordY)}
+            <RightBorder index={coordY} />
           </tr>
         </tbody>);
     }
 
-    private mapColumnsContent(){
+    private mapColumnsContent(coordY :number){
         //@ts-ignore
-        return [...Array(this.state.columnsQuantity).keys()].map(index => 
-        <td key={index}> <Cell /> </td>);
+        return [...Array(this.state.columnsQuantity).keys()].map(coordX => 
+        <td key={coordX}> <Cell isHeader={this.isHeader(coordX,coordY)}/> </td>);
+    }
+
+    isHeader(x:number, y:number){
+        return x===this.state.header.x && y===this.state.header.y
     }
 }
