@@ -52,14 +52,17 @@ export class Board extends React.Component<BoardProps, BoardState> {
         this.state = {
             columnsQuantity: props.columnsQuantity,
             rowsQuantity : props.rowsQuantity,
-            header : props.header || {x : 0, y :0}
+            header : props.header 
         }
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+        document.addEventListener("keydown", e => {
+            this.handleKeyPressed(e);
+          });
         return (
         <div>
-        <table className={"gbs_board"}>
+        <table  className={"gbs_board"}>
             <tbody className={""}>
             <tr className={""}>
                 <TopLeftCorner/>
@@ -117,7 +120,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
     private mapRaws(){
         // @ts-ignore
         return [...Array(this.state.rowsQuantity).keys()].reverse().map(coordY => 
-        <tbody key={coordY}>
+        <tbody key={Math.random()}>
           <tr>
             <LeftBorder index={coordY} />
             {this.mapColumnsContent(coordY)}
@@ -135,4 +138,41 @@ export class Board extends React.Component<BoardProps, BoardState> {
     isHeader(x:number, y:number){
         return x===this.state.header.x && y===this.state.header.y
     }
+
+    handleKeyPressed(e : KeyboardEvent){
+        
+        if (e.keyCode === 38) {
+            this.setState( (prevState) =>
+            ({header : 
+             {...prevState.header,y : prevState.header.y +1}
+             }
+            )
+        )
+        }
+        else if (e.keyCode === 40) {
+            this.setState( (prevState) =>
+            ({header : 
+             {...prevState.header,y : prevState.header.y -1}
+             }
+            )
+        )
+        }
+        else if (e.keyCode === 37) {
+            this.setState( (prevState) =>
+            ({header : 
+             {...prevState.header,x : prevState.header.x -1}
+             }
+            )
+        )
+        }
+        else if (e.keyCode === 39) {
+            this.setState( (prevState) =>
+            ({header : 
+             {...prevState.header,y : prevState.header.y +1}
+             }
+            )
+        )
+        }
+    
+}
 }
