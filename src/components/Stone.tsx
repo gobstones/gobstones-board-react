@@ -1,8 +1,4 @@
 import React from 'react';
-import bolita_roja_svg from '../img/op_bolita_roja.svg'
-import bolita_azul_svg from '../img/op_bolita_azul.svg'
-import bolita_verde_svg from '../img/op_bolita_verde.svg'
-import bolita_negra_svg from '../img/op_bolita_negra.svg'
 
 type StoneProps = {
     color: string
@@ -61,31 +57,19 @@ class Stone extends React.Component<StoneProps, StoneState> {
         }));
     }
 
-    renderStone() {
-        return (
-            <div
-                className={` gbs_stone gbs_tooltip gbs_color-${this.props.color} gbs_black ${this.cssClass()}`}
-                onClick={() => this.leftClick()}/>
-        );
-    }
-
-    private getImageSource(): string {
-        if (this.props.color === "red") {
-            return bolita_roja_svg;
-        }
-        if (this.props.color === "green") {
-            return bolita_verde_svg;
-        }
-        if (this.props.color === "blue") {
-            return bolita_azul_svg;
-        }
-        return bolita_negra_svg;
-
-    }
+    handleRightClick(event: React.MouseEvent<HTMLDivElement>) {
+        event.preventDefault();
+        this.setState(prevState => ({
+            amount: {
+                ...prevState.amount,
+                value: prevState.amount.value > 0 ? prevState.amount.value - 1 : 0
+            }
+        }))    }
 
     render() {
         return (
-            <div onClick={() => this.leftClick()} className={`  gbs_color-${this.props.color} gbs_stone gbs_tooltip gbs_${this.props.color} ${this.cssClass()} `}>
+            <div onClick={() => this.leftClick()} onContextMenu={(event: React.MouseEvent<HTMLDivElement>) => this.handleRightClick(event)}
+                 className={`  gbs_color-${this.props.color} gbs_stone gbs_tooltip gbs_${this.props.color} ${this.cssClass()} `}>
                 <span className="gbs_stone_amount">{this.amountText(this.state.amount.value)}</span>
             </div>
         );
