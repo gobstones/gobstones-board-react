@@ -8,7 +8,7 @@ import {Board} from "./components/Board";
 
 const App: React.FC = () => {
     return (
-            <Board columnsQuantity={5} rowsQuantity={5} header={{x : 0,y :0}} />
+            <Board columnsQuantity={5} rowsQuantity={7} header={{x : 0,y :0}} />
     );
 };
 

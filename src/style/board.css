@@ -115,6 +115,36 @@ table.gbs_board {
   content: url(https://user-images.githubusercontent.com/1631752/37945593-54b482c0-3157-11e8-9f32-bd25d7bf901b.png);
 }
 
+.arrow-img{
+  width: 50px;
+  height: auto;
+}
+
+.bottom-arrow-img{
+  -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg); 
+    -o-transform:rotate(90deg);
+
+}
+.right-arrow-button{
+  position: relative;
+  top : 100px;
+}
+
+.left-arrow-button{
+  position: relative;
+  left : 100px;
+}
+
+.arrow-button{
+  opacity: 0.2;
+  border:none;
+  background: transparent;
+}
+.arrow-button:hover{
+  opacity: 8;
+}
+
 /*# sourceMappingURL=style.css.map */
 
     

@@ -57,7 +57,9 @@ export class Board extends React.Component<BoardProps, BoardState> {
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-        return <table className={"gbs_board"}>
+        return (
+        <div>
+        <table className={"gbs_board"}>
             <tbody className={""}>
             <tr className={""}>
                 <TopLeftCorner/>
@@ -73,7 +75,37 @@ export class Board extends React.Component<BoardProps, BoardState> {
                 <BottomRightCorner />
               </tr>
             </tbody>
-        </table>;
+        </table>
+        {this.renderRightArrow()}
+        {this.renderBottomArrow()}
+        </div>
+        );
+    }
+    
+    handleRightArrowClick(){
+        this.setState({columnsQuantity : this.state.columnsQuantity + 1})
+    }
+
+    handleLeftArrowClick(){
+        this.setState({rowsQuantity : this.state.rowsQuantity + 1})
+    }
+
+    renderRightArrow(){
+        return(
+            <button className="right-arrow-button arrow-button" onClick={() => this.handleRightArrowClick()}>
+                <img alt="arrow" className="arrow-img" src= "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
+            </button>
+        );
+    }
+
+    renderBottomArrow(){
+        return(
+            <div>
+                <button className="left-arrow-button arrow-button" onClick={() => this.handleLeftArrowClick()}>
+                    <img alt="arrow" className="bottom-arrow-img arrow-img" src= "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
+                </button>
+            </div>
+        );
     }
 
     private mapColumnsBorder() {
