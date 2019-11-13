@@ -56,10 +56,17 @@ export class Board extends React.Component<BoardProps, BoardState> {
         }
     }
 
-    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+    componentDidMount(){
         document.addEventListener("keydown", e => {
             this.handleKeyPressed(e);
           });
+    }
+
+    componentWillUnmount(){
+        document.removeEventListener("keydown",this.handleKeyPressed,false);
+    }
+
+    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
         <div>
         <table  className={"gbs_board"}>
@@ -140,39 +147,35 @@ export class Board extends React.Component<BoardProps, BoardState> {
     }
 
     handleKeyPressed(e : KeyboardEvent){
-        
-        if (e.keyCode === 38) {
-            this.setState( (prevState) =>
-            ({header : 
-             {...prevState.header,y : prevState.header.y +1}
-             }
-            )
-        )
+        switch(e.key){
+            case "ArrowUp" : 
+                const newHeaderU = {
+                    x : this.state.header.x ,
+                    y : Math.min(this.state.header.y +1,this.state.rowsQuantity-1)
+                }
+                this.setState({header : newHeaderU})
+                break;
+            case "ArrowDown" : 
+                const newHeaderD = {
+                    x : this.state.header.x ,
+                    y : Math.max(this.state.header.y -1,0)
+                }
+                this.setState({header : newHeaderD})
+                break;
+            case "ArrowRight" : 
+                const newHeaderR = {
+                    x : Math.min(this.state.header.x +1,this.state.columnsQuantity-1),
+                    y : this.state.header.y,
+                }
+                this.setState({header : newHeaderR})
+                break;
+            case "ArrowLeft" : 
+                const newHeaderL = {
+                    x : Math.max(this.state.header.x -1,0),
+                    y : this.state.header.y,
+                }
+                this.setState({header : newHeaderL})
+                break;
         }
-        else if (e.keyCode === 40) {
-            this.setState( (prevState) =>
-            ({header : 
-             {...prevState.header,y : prevState.header.y -1}
-             }
-            )
-        )
-        }
-        else if (e.keyCode === 37) {
-            this.setState( (prevState) =>
-            ({header : 
-             {...prevState.header,x : prevState.header.x -1}
-             }
-            )
-        )
-        }
-        else if (e.keyCode === 39) {
-            this.setState( (prevState) =>
-            ({header : 
-             {...prevState.header,y : prevState.header.y +1}
-             }
-            )
-        )
-        }
-    
-}
+    }
 }
