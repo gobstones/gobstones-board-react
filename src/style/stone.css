@@ -39,6 +39,15 @@
 .gbs_hidden {
     opacity : 0
 }
+
+.gbs_hidden_blocked {
+    opacity : 0
+}
+
+.gbs_hidden_blocked:hover {
+    visibility: hidden
+}
+
 .gbs_hidden:hover {
     visibility: visible;
 }

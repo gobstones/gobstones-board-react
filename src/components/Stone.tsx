@@ -1,7 +1,8 @@
 import React from 'react';
 
 type StoneProps = {
-    color: string
+    color: string,
+    editable: boolean
 }
 
 type StoneAmount = {
@@ -19,7 +20,7 @@ class Stone extends React.Component<StoneProps, StoneState> {
         this.state = {
             amount: {
                 value: 0,
-                editable: true,
+                editable: this.props.editable,
             }
         }
     }
@@ -36,35 +37,40 @@ class Stone extends React.Component<StoneProps, StoneState> {
         }
     }
 
+    hiddenClass(){
+        return (this.state.amount.editable) ? "gbs_hidden" : "gbs_hidden_blocked"
+    }
+
     cssClass() {
-        if (this.state.amount.editable) {
-            if (this.state.amount.value > 0) {
-                return "gbs_pointer";
-            } else {
-                return "gbs_hidden gbs_ghost-" + this.props.color;
-            }
+        if (this.state.amount.value > 0) {
+            return "gbs_pointer";
         } else {
-            return "";
+            return `${this.hiddenClass()} gbs_ghost-` + this.props.color;
         }
     }
 
     leftClick() {
-        this.setState(prevState => ({
-            amount: {
-                ...prevState.amount,
-                value: prevState.amount.value + 1
-            }
-        }));
+        if(this.state.amount.editable){
+            this.setState(prevState => ({
+                amount: {
+                    ...prevState.amount,
+                    value: prevState.amount.value + 1
+                }
+            }));
+        }
     }
 
     handleRightClick(event: React.MouseEvent<HTMLDivElement>) {
-        event.preventDefault();
-        this.setState(prevState => ({
-            amount: {
-                ...prevState.amount,
-                value: prevState.amount.value > 0 ? prevState.amount.value - 1 : 0
-            }
-        }))    }
+        if(this.state.amount.editable){
+            event.preventDefault();
+            this.setState(prevState => ({
+                amount: {
+                    ...prevState.amount,
+                    value: prevState.amount.value > 0 ? prevState.amount.value - 1 : 0
+                }
+            }))    
+        }
+    }
 
     render() {
         return (
