@@ -7,7 +7,6 @@ type StoneProps = {
 
 type StoneAmount = {
     value: number,
-    editable: boolean
 }
 
 type StoneState = {
@@ -20,7 +19,6 @@ class Stone extends React.Component<StoneProps, StoneState> {
         this.state = {
             amount: {
                 value: 0,
-                editable: this.props.editable,
             }
         }
     }
@@ -38,7 +36,7 @@ class Stone extends React.Component<StoneProps, StoneState> {
     }
 
     hiddenClass(){
-        return (this.state.amount.editable) ? "gbs_hidden" : "gbs_hidden_blocked"
+        return (this.props.editable) ? "gbs_hidden" : "gbs_hidden_blocked"
     }
 
     cssClass() {
@@ -50,7 +48,7 @@ class Stone extends React.Component<StoneProps, StoneState> {
     }
 
     leftClick() {
-        if(this.state.amount.editable){
+        if(this.props.editable){
             this.setState(prevState => ({
                 amount: {
                     ...prevState.amount,
@@ -61,7 +59,7 @@ class Stone extends React.Component<StoneProps, StoneState> {
     }
 
     handleRightClick(event: React.MouseEvent<HTMLDivElement>) {
-        if(this.state.amount.editable){
+        if(this.props.editable){
             event.preventDefault();
             this.setState(prevState => ({
                 amount: {
