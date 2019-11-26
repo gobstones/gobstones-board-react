@@ -6,7 +6,8 @@ type CellState ={
 }
 
 type CellProps ={
-    isHeader : boolean
+    isHeader : boolean;
+    editable : boolean
 }
 
 export default class Cell extends React.Component<CellProps, CellState> {
@@ -31,18 +32,18 @@ export default class Cell extends React.Component<CellProps, CellState> {
                     <tbody>
                     <tr>
                         <td>
-                            <Stone color={"blue"}/>
+                            <Stone editable={this.props.editable} color={"blue"}/>
                         </td>
                         <td>
-                            <Stone color={"black"}/>
+                            <Stone editable={this.props.editable} color={"black"}/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <Stone color={"red"}/>
+                            <Stone editable={this.props.editable} color={"red"}/>
                         </td>
                         <td>
-                            <Stone color={"green"}/>
+                            <Stone editable={this.props.editable} color={"green"}/>
                         </td>
                     </tr>
                     </tbody>

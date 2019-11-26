@@ -15,6 +15,7 @@ type BoardProps = {
     columnsQuantity : number,
     rowsQuantity : number,
     header : Header,
+    editable :boolean,
 }
 
 type BorderProps = {
@@ -101,21 +102,27 @@ export class Board extends React.Component<BoardProps, BoardState> {
     }
 
     renderRightArrow(){
-        return(
-            <button className="right-arrow-button arrow-button" onClick={() => this.handleRightArrowClick()}>
-                <img alt="arrow" className="arrow-img" src= "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
-            </button>
-        );
+        if(this.props.editable){
+            return(
+                <button className="right-arrow-button arrow-button" onClick={() => this.handleRightArrowClick()}>
+                    <img alt="arrow" className="arrow-img" src= "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
+                </button>
+            );
+        }
+        
     }
 
     renderBottomArrow(){
-        return(
-            <div>
-                <button className="left-arrow-button arrow-button" onClick={() => this.handleLeftArrowClick()}>
-                    <img alt="arrow" className="bottom-arrow-img arrow-img" src= "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
-                </button>
-            </div>
-        );
+        if(this.props.editable){
+            return(
+                <div>
+                    <button className="left-arrow-button arrow-button" onClick={() => this.handleLeftArrowClick()}>
+                        <img alt="arrow" className="bottom-arrow-img arrow-img" src= "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
+                    </button>
+                </div>
+            );
+        }
+        
     }
 
     private mapColumnsBorder() {
@@ -139,7 +146,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
     private mapColumnsContent(coordY :number){
         //@ts-ignore
         return [...Array(this.state.columnsQuantity).keys()].map(coordX => 
-        <td key={coordX}> <Cell isHeader={this.isHeader(coordX,coordY)}/> </td>);
+        <td key={coordX}> <Cell editable={this.props.editable} isHeader={this.isHeader(coordX,coordY)}/> </td>);
     }
 
     isHeader(x:number, y:number){
