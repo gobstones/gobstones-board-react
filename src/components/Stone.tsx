@@ -1,83 +1,44 @@
 import React from 'react';
 
 type StoneProps = {
-    color: string,
-    editable: boolean
+    color: string;
+    amount: number;
+    rightClick: () => any;
+    leftClick: () => any;
 }
 
-type StoneAmount = {
-    value: number,
-}
-
-type StoneState = {
-    amount: StoneAmount
-}
-
-class Stone extends React.Component<StoneProps, StoneState> {
-    constructor(props: StoneProps) {
-        super(props);
-        this.state = {
-            amount: {
-                value: 0,
-            }
-        }
-    }
-
-    hasBigAmount(amount: number) {
+function Stone({color, leftClick, amount, rightClick}: StoneProps) {
+    function hasBigAmount(): boolean {
         return amount > 99;
     }
 
-    amountText(amount: number) {
-        if (this.hasBigAmount(amount)) {
+    function amountText(): string | number {
+        if (hasBigAmount()) {
             return "*";
         } else {
             return amount;
         }
     }
 
-    hiddenClass(){
-        return (this.props.editable) ? "gbs_hidden" : "gbs_hidden_blocked"
+    function hiddenClass(): string {
+        return "gbs_hidden";
     }
 
-    cssClass() {
-        if (this.state.amount.value > 0) {
+    function cssClass(): string {
+        if (amount > 0) {
             return "gbs_pointer";
         } else {
-            return `${this.hiddenClass()} gbs_ghost-` + this.props.color;
+            return `${hiddenClass()} gbs_ghost-` + color;
         }
     }
 
-    leftClick() {
-        if(this.props.editable){
-            this.setState(prevState => ({
-                amount: {
-                    ...prevState.amount,
-                    value: prevState.amount.value + 1
-                }
-            }));
-        }
-    }
-
-    handleRightClick(event: React.MouseEvent<HTMLDivElement>) {
-        if(this.props.editable){
-            event.preventDefault();
-            this.setState(prevState => ({
-                amount: {
-                    ...prevState.amount,
-                    value: prevState.amount.value > 0 ? prevState.amount.value - 1 : 0
-                }
-            }))    
-        }
-    }
-
-    render() {
-        return (
-            <div onClick={() => this.leftClick()} onContextMenu={(event: React.MouseEvent<HTMLDivElement>) => this.handleRightClick(event)}
-                 className={`  gbs_color-${this.props.color} gbs_stone gbs_tooltip gbs_${this.props.color} ${this.cssClass()} `}>
-                <span className="gbs_stone_amount">{this.amountText(this.state.amount.value)}</span>
-            </div>
-        );
-    }
+    return (
+        <div onClick={leftClick}
+             onContextMenu={(e) => {e.preventDefault();rightClick()}}
+             className={`  gbs_color-${color} gbs_stone gbs_tooltip gbs_${color} ${cssClass()} `}>
+            <span className="gbs_stone_amount">{amountText()}</span>
+        </div>
+    );
 }
 
 export default Stone;
