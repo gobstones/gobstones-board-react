@@ -145,6 +145,16 @@ table.gbs_board {
   opacity: 8;
 }
 
+.gbs-boom-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gbs-boom-info{
+  color:red;
+}
+
 /*# sourceMappingURL=style.css.map */
 
     
