@@ -115,25 +115,65 @@ table.gbs_board {
   content: url(https://user-images.githubusercontent.com/1631752/37945593-54b482c0-3157-11e8-9f32-bd25d7bf901b.png);
 }
 
+.container {
+  display: grid;
+  width: 30px;
+  height: 100%; 
+  position: relative;
+}
+
+.panel{
+  left:50%;
+  font-weight: bold;
+
+}
+
+.board{
+  grid-column: 1;
+  grid-row: 2
+}
+
 .arrow-img{
   width: 50px;
   height: auto;
 }
 
-.bottom-arrow-img{
+.arrow-img-left{
+  -webkit-transform:rotate(180deg);
+  -moz-transform:rotate(180deg); 
+  -o-transform:rotate(180deg);
+}
+
+.top-arrow-img-up{
   -webkit-transform:rotate(90deg);
-    -moz-transform:rotate(90deg); 
-    -o-transform:rotate(90deg);
+  -moz-transform:rotate(90deg); 
+  -o-transform:rotate(90deg);
+}
+
+.top-arrow-img-down{
+  -webkit-transform:rotate(270deg);
+  -moz-transform:rotate(270deg); 
+  -o-transform:rotate(270deg);
 
 }
 .right-arrow-button{
   position: relative;
-  top : 100px;
+  top : 50%;
 }
 
-.left-arrow-button{
-  position: relative;
-  left : 100px;
+.wrapper{
+  clear: left;
+  float: left; 
+  position: relative; 
+  left: 50%;
+  min-width: 120px;
+}
+
+.top-arrow-button{
+  display: block; 
+  float: left; 
+  position: relative; 
+  right: 50%;
 }
 
 .arrow-button{
@@ -145,14 +185,32 @@ table.gbs_board {
   opacity: 8;
 }
 
-.gbs-boom-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.right-arrows{
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center
 }
 
-.gbs-boom-info{
-  color:red;
+.top-arrows{
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+}  
+
+.input-size:focus{
+  outline: none;
+}
+
+.input-size{
+  width:30px;
+  text-align: center;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-bottom: 1.5px solid blue;
+
 }
 
 /*# sourceMappingURL=style.css.map */
