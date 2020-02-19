@@ -99,6 +99,8 @@ function removeRedAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
     return cells
 }
 
+const arrowImgSrc = "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png";
+
 export class Board extends React.Component<BoardProps, BoardState> {
     constructor(props: any) {
         super(props);
@@ -123,63 +125,119 @@ export class Board extends React.Component<BoardProps, BoardState> {
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
             <div>
-                <table className={"gbs_board"}>
-                    <tbody className={""}>
-                    <tr className={""}>
-                        <TopLeftCorner/>
-                        {this.mapColumnsBorder()}
-                        <TopRightCorner/>
-                    </tr>
-                    </tbody>
-                    {this.mapRaws()}
-                    <tbody>
-                    <tr>
-                        <BottomLeftCorner/>
-                        {this.mapColumnsBorder()}
-                        <BottomRightCorner/>
-                    </tr>
-                    </tbody>
-                </table>
-                {this.renderRightArrow()}
-                {this.renderBottomArrow()}
+                {this.renderSizePanel()}
+                <div className="container">
+                    <table className={"gbs_board board"}>
+                        <tbody className={""}>
+                        <tr className={""}>
+                            <TopLeftCorner/>
+                            {this.mapColumnsBorder()}
+                            <TopRightCorner/>
+                        </tr>
+                        </tbody>
+                        {this.mapRaws()}
+                        <tbody>
+                        <tr>
+                            <BottomLeftCorner/>
+                            {this.mapColumnsBorder()}
+                            <BottomRightCorner/>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div className="right-arrows">
+                        {this.renderRightArrows()}
+                    </div>
+                    <div className="top-arrows">
+                        {this.renderTopArrows()}
+                    </div>
+                </div>
             </div>
         );
     }
 
-    handleRightArrowClick() {
+    handleRightArrowClickRight() {
         this.setState({cells: emptyBoard(this.state.columnsQuantity + 1, this.state.rowsQuantity),columnsQuantity: this.state.columnsQuantity + 1})
     }
 
-    handleLeftArrowClick() {
+    handleRightArrowClickLeft() {
+        if(this.state.columnsQuantity > 1){
+            this.setState({cells: emptyBoard(this.state.columnsQuantity - 1, this.state.rowsQuantity),columnsQuantity: this.state.columnsQuantity - 1})
+        }
+    }
+
+    handleTopArrowClickUp() {
         this.setState({cells: emptyBoard(this.state.columnsQuantity, this.state.rowsQuantity +1 ), rowsQuantity: this.state.rowsQuantity + 1})
     }
 
-    renderRightArrow() {
-        if (this.props.editable) {
-            return (
-                <button className="right-arrow-button arrow-button" onClick={() => this.handleRightArrowClick()}>
-                    <img alt="arrow" className="arrow-img"
-                         src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
-                </button>
-            );
+    handleTopArrowClickDown() {
+        if(this.state.rowsQuantity > 1){
+            this.setState({cells: emptyBoard(this.state.columnsQuantity, this.state.rowsQuantity -1 ), rowsQuantity: this.state.rowsQuantity - 1})
         }
-
     }
 
-    renderBottomArrow() {
-        if (this.props.editable) {
-            return (
-                <div>
-                    <button className="left-arrow-button arrow-button" onClick={() => this.handleLeftArrowClick()}>
-                        <img alt="arrow" className="bottom-arrow-img arrow-img"
-                             src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png"/>
-                    </button>
+    handleChangeXSize(e : any){
+        if(parseInt(e.target.value) > 0){
+            e.preventDefault()
+            this.resetHeader()
+            this.setState({cells: emptyBoard(e.target.value , this.state.rowsQuantity ), columnsQuantity: parseInt(e.target.value)})
+        }
+    }
+
+    handleChangeYSize(e : any){
+        if(parseInt(e.target.value) > 0){
+            e.preventDefault()
+            this.resetHeader()
+            this.setState({cells: emptyBoard(this.state.columnsQuantity, e.target.value ), rowsQuantity: parseInt(e.target.value)})
+        }
+    }
+
+    resetHeader(){
+        this.setState({header : {x : 0, y : 0}})
+    }
+
+    renderSizePanel(){
+        if(this.props.editable){
+            return(
+                <div className="panel">
+                    Tamaño:
+                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeXSize(e)} value={this.state.columnsQuantity} />
+                    columnas x                
+                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeYSize(e)} value={this.state.rowsQuantity} />
+                    filas
                 </div>
             );
         }
-
     }
 
+    renderRightArrows(){
+        if(this.props.editable){
+            return(
+                <div>
+                    <button className="right-arrow-button arrow-button" onClick={() => this.handleRightArrowClickRight()}>
+                        <img alt="arrow" className="arrow-img" src= {arrowImgSrc}/>
+                    </button>
+                    <button className="arrow-button" onClick={() => this.handleRightArrowClickLeft()}>
+                        <img alt="arrow" className="arrow-img arrow-img-left" src= {arrowImgSrc}/>
+                    </button>
+                </div>
+            );
+        }  
+    }
+
+    renderTopArrows(){
+        if(this.props.editable){
+            return(
+                <div className="wrapper">
+                    <button className="top-arrow-button arrow-button" onClick={() => this.handleTopArrowClickDown()}>
+                        <img alt="arrow" className="top-arrow-img-down arrow-img" src={arrowImgSrc}/>
+                    </button>
+                    <button className="top-arrow-button arrow-button" onClick={() => this.handleTopArrowClickUp()}>
+                        <img alt="arrow" className="top-arrow-img-up arrow-img" src= {arrowImgSrc}/>
+                    </button>
+                </div>
+            );
+        }   
+    }
     private mapColumnsBorder() {
         // @ts-ignore
         return [...Array(this.state.columnsQuantity).keys()].map(index => <td
