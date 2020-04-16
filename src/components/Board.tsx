@@ -1,11 +1,13 @@
 import React from "react";
 import Cell, {CellContent} from "./Cell";
+import CellManager from "./CellManager";
+import Coord from "./Coord";
 
 type BoardState = {
     columnsQuantity: number;
     rowsQuantity: number;
     header: Header;
-    cells: CellContent[][];
+    cells: CellManager;
 }
 
 type Header = {
@@ -59,6 +61,11 @@ function emptyBoard(columnsQuantity: number, rowsQuantity: number) {
     return cells;
 }
 
+function addBlueAtOn(coordX: number, coordY: number, cells: CellContent[][]): CellContent[][] {
+    cells[coordX][coordY].blue++;
+    return cells;
+}
+
 function removeBlueAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
     if (cells[coordX][coordY].blue) {
         cells[coordX][coordY].blue--;
@@ -108,7 +115,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
             columnsQuantity: props.columnsQuantity,
             rowsQuantity: props.rowsQuantity,
             header: props.header,
-            cells: emptyBoard(props.columnsQuantity, props.rowsQuantity)
+            cells: new CellManager({x : 0,y : 0}),
         };
     }
 
@@ -156,22 +163,22 @@ export class Board extends React.Component<BoardProps, BoardState> {
     }
 
     handleRightArrowClickRight() {
-        this.setState({cells: emptyBoard(this.state.columnsQuantity + 1, this.state.rowsQuantity),columnsQuantity: this.state.columnsQuantity + 1})
+        this.setState({columnsQuantity : this.state.columnsQuantity +1})
     }
 
     handleRightArrowClickLeft() {
         if(this.state.columnsQuantity > 1){
-            this.setState({cells: emptyBoard(this.state.columnsQuantity - 1, this.state.rowsQuantity),columnsQuantity: this.state.columnsQuantity - 1})
+            this.setState({columnsQuantity : this.state.columnsQuantity -1})
         }
     }
 
     handleTopArrowClickUp() {
-        this.setState({cells: emptyBoard(this.state.columnsQuantity, this.state.rowsQuantity +1 ), rowsQuantity: this.state.rowsQuantity + 1})
+        this.setState({rowsQuantity : this.state.rowsQuantity +1})
     }
 
     handleTopArrowClickDown() {
         if(this.state.rowsQuantity > 1){
-            this.setState({cells: emptyBoard(this.state.columnsQuantity, this.state.rowsQuantity -1 ), rowsQuantity: this.state.rowsQuantity - 1})
+            this.setState({rowsQuantity : this.state.rowsQuantity -1})
         }
     }
 
@@ -179,7 +186,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
         if(parseInt(e.target.value) > 0){
             e.preventDefault()
             this.resetHeader()
-            this.setState({cells: emptyBoard(e.target.value , this.state.rowsQuantity ), columnsQuantity: parseInt(e.target.value)})
+            this.setState({ columnsQuantity: parseInt(e.target.value)})
         }
     }
 
@@ -187,7 +194,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
         if(parseInt(e.target.value) > 0){
             e.preventDefault()
             this.resetHeader()
-            this.setState({cells: emptyBoard(this.state.columnsQuantity, e.target.value ), rowsQuantity: parseInt(e.target.value)})
+            this.setState({rowsQuantity: parseInt(e.target.value)})
         }
     }
 
@@ -257,23 +264,21 @@ export class Board extends React.Component<BoardProps, BoardState> {
     }
 
     private mapColumnsContent(coordY: number) {
-        function addBlueAtOn(coordX: number, coordY: number, cells: CellContent[][]): CellContent[][] {
-            cells[coordX][coordY].blue++;
-            return cells;
-        }
-
         //@ts-ignore
         return [...Array(this.state.columnsQuantity).keys()].map(coordX =>
             <td key={coordX}><Cell isHeader={this.isHeader(coordX, coordY)}
-                                   addBlue={() => this.props.editable ? this.setState({cells: addBlueAtOn(coordX, coordY, this.state.cells)}) : () => {}}
-                                   content={this.state.cells[coordX][coordY]}
-                                   removeBlue={() => this.props.editable ? this.setState({cells: removeBlueAtOn(coordX, coordY, this.state.cells)}) : () => {}}
-                                   addBlack={() => this.props.editable ? this.setState({cells: addBlackAtOn(coordX, coordY, this.state.cells)}) : () => {}}
-                                   removeBlack={() => this.props.editable ? this.setState({cells: removeBlackAtOn(coordX, coordY, this.state.cells)}) : () => {}}
-                                   addGreen={() => this.props.editable ? this.setState({cells: addGreenAtOn(coordX, coordY, this.state.cells)}) : () => {}}
-                                   removeGreen={() => this.props.editable ? this.setState({cells: removeGreenAtOn(coordX, coordY, this.state.cells)}) : () => {}}
-                                   addRed={() => this.props.editable ? this.setState({cells: addRedAtOn(coordX, coordY, this.state.cells)}) : () => {}}
-                                   removeRed={() => this.props.editable ? this.setState({cells: removeRedAtOn(coordX, coordY, this.state.cells)}) : () => {}}/>
+                                   addBlue={() => this.props.editable ? this.state.cells.addBlueAtOn(new Coord(coordX, coordY)) : () => {}}
+                                   content={this.state.cells.getCell(new Coord(coordX, coordY))}
+                                   removeBlue={() => this.props.editable ? this.state.cells.removeBlueAtOn(new Coord(coordX, coordY)) : () => {}}
+                                   addBlack={() => this.props.editable ? this.state.cells.addBlackAtOn(new Coord(coordX, coordY)) : () => {}}
+                                   removeBlack={() => this.props.editable ? this.state.cells.removeBlackAtOn(new Coord(coordX, coordY)) : () => {}}
+                                   addGreen={() => this.props.editable ?this.state.cells.addGreenAtOn(new Coord(coordX, coordY)): () => {}}
+                                   removeGreen={() => this.props.editable ? this.state.cells.removeGreenAtOn(new Coord(coordX, coordY)): () => {}}
+                                   addRed={() => this.props.editable ? this.state.cells.addRedAtOn(new Coord(coordX, coordY)) : () => {}}
+                                   removeRed={() => this.props.editable ? this.state.cells.removeRedAtOn(new Coord(coordX, coordY)): () => {}}
+                                   key={Math.random()}
+                                   />
+
             </td>);
     }
 
