@@ -1,5 +1,5 @@
 import React from "react";
-import Cell, {CellContent} from "./Cell";
+import Cell from "./Cell";
 import CellManager from "./CellManager";
 import Coord from "./Coord";
 
@@ -49,63 +49,6 @@ function BottomRightCorner() {
     return <td className="gbs_lx gbs_bottom_right"/>
 }
 
-
-function emptyBoard(columnsQuantity: number, rowsQuantity: number) {
-    let cells = [];
-    for (let i = 0; i < columnsQuantity; i++) {
-        cells[i] = Array(rowsQuantity);
-        for (let j = 0; j < rowsQuantity; j++) {
-            cells[i][j] = {red: 0, blue: 0, green: 0, black: 0}
-        }
-    }
-    return cells;
-}
-
-function addBlueAtOn(coordX: number, coordY: number, cells: CellContent[][]): CellContent[][] {
-    cells[coordX][coordY].blue++;
-    return cells;
-}
-
-function removeBlueAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
-    if (cells[coordX][coordY].blue) {
-        cells[coordX][coordY].blue--;
-    }
-    return cells;
-}
-
-function addBlackAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
-    cells[coordX][coordY].black++;
-    return cells;
-}
-
-function removeBlackAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
-    if (cells[coordX][coordY].black)
-        cells[coordX][coordY].black--;
-    return cells;
-}
-
-function addGreenAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
-    cells[coordX][coordY].green++;
-    return cells;
-}
-
-function addRedAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
-    cells[coordX][coordY].red++;
-    return cells;
-}
-
-function removeGreenAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
-    if (cells[coordX][coordY].green)
-        cells[coordX][coordY].green--;
-    return cells;
-}
-
-function removeRedAtOn(coordX: number, coordY: number, cells: CellContent[][]) {
-    if (cells[coordX][coordY].red)
-        cells[coordX][coordY].red--;
-    return cells
-}
-
 const arrowImgSrc = "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png";
 
 export class Board extends React.Component<BoardProps, BoardState> {
@@ -115,7 +58,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
             columnsQuantity: props.columnsQuantity,
             rowsQuantity: props.rowsQuantity,
             header: props.header,
-            cells: new CellManager({x : 0,y : 0}),
+            cells: new CellManager({x : 0,y : 0},(cells : CellManager) => this.setState({cells}))
         };
     }
 
@@ -276,7 +219,6 @@ export class Board extends React.Component<BoardProps, BoardState> {
                                    removeGreen={() => this.props.editable ? this.state.cells.removeGreenAtOn(new Coord(coordX, coordY)): () => {}}
                                    addRed={() => this.props.editable ? this.state.cells.addRedAtOn(new Coord(coordX, coordY)) : () => {}}
                                    removeRed={() => this.props.editable ? this.state.cells.removeRedAtOn(new Coord(coordX, coordY)): () => {}}
-                                   key={Math.random()}
                                    />
 
             </td>);
