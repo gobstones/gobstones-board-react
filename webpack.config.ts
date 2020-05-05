@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './build',
   module: {
     rules: [
       { test: /\.js$/, exclude: /(node_modules|bower_components)/,

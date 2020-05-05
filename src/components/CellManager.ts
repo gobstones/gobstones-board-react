@@ -1,19 +1,16 @@
 import { CellContent } from "./Cell";
-import Coord from './Coord';
 
-type Header = {
+type Coord = {
     x: number,
     y: number,
 }
 
+
 export default class CellManager {
-    //No olvidar resolver el tamaño
     cells : Map<string,CellContent>;
-    header : Header;
     update : (cm : CellManager) => void
-    constructor(header : Header, update : (cm : CellManager) => void){
+    constructor(update : (cm : CellManager) => void){
         this.cells = new Map();
-        this.header = header;
         this.update = update;
     }
 

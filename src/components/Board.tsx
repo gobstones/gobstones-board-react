@@ -1,23 +1,22 @@
 import React from "react";
 import Cell from "./Cell";
 import CellManager from "./CellManager";
-import Coord from "./Coord";
 
 type BoardState = {
     columnsQuantity: number;
     rowsQuantity: number;
-    header: Header;
+    header: Coord;
     cells: CellManager;
 }
 
-type Header = {
+type Coord = {
     x: number,
     y: number,
 }
 type BoardProps = {
     columnsQuantity: number,
     rowsQuantity: number,
-    header: Header,
+    header: Coord,
     editable: boolean,
 }
 
@@ -58,7 +57,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
             columnsQuantity: props.columnsQuantity,
             rowsQuantity: props.rowsQuantity,
             header: props.header,
-            cells: new CellManager({x : 0,y : 0},(cells : CellManager) => this.setState({cells}))
+            cells: new CellManager((cells : CellManager) => this.setState({cells}))
         };
     }
 
@@ -210,15 +209,15 @@ export class Board extends React.Component<BoardProps, BoardState> {
         //@ts-ignore
         return [...Array(this.state.columnsQuantity).keys()].map(coordX =>
             <td key={coordX}><Cell isHeader={this.isHeader(coordX, coordY)}
-                                   addBlue={() => this.props.editable ? this.state.cells.addBlueAtOn(new Coord(coordX, coordY)) : () => {}}
-                                   content={this.state.cells.getCell(new Coord(coordX, coordY))}
-                                   removeBlue={() => this.props.editable ? this.state.cells.removeBlueAtOn(new Coord(coordX, coordY)) : () => {}}
-                                   addBlack={() => this.props.editable ? this.state.cells.addBlackAtOn(new Coord(coordX, coordY)) : () => {}}
-                                   removeBlack={() => this.props.editable ? this.state.cells.removeBlackAtOn(new Coord(coordX, coordY)) : () => {}}
-                                   addGreen={() => this.props.editable ?this.state.cells.addGreenAtOn(new Coord(coordX, coordY)): () => {}}
-                                   removeGreen={() => this.props.editable ? this.state.cells.removeGreenAtOn(new Coord(coordX, coordY)): () => {}}
-                                   addRed={() => this.props.editable ? this.state.cells.addRedAtOn(new Coord(coordX, coordY)) : () => {}}
-                                   removeRed={() => this.props.editable ? this.state.cells.removeRedAtOn(new Coord(coordX, coordY)): () => {}}
+                                   addBlue={() => this.props.editable ? this.state.cells.addBlueAtOn({x : coordX, y : coordY}) : () => {}}
+                                   content={this.state.cells.getCell({x : coordX, y : coordY})}
+                                   removeBlue={() => this.props.editable ? this.state.cells.removeBlueAtOn({x : coordX, y : coordY}) : () => {}}
+                                   addBlack={() => this.props.editable ? this.state.cells.addBlackAtOn({x : coordX, y : coordY}) : () => {}}
+                                   removeBlack={() => this.props.editable ? this.state.cells.removeBlackAtOn({x : coordX, y : coordY}) : () => {}}
+                                   addGreen={() => this.props.editable ?this.state.cells.addGreenAtOn({x : coordX, y : coordY}): () => {}}
+                                   removeGreen={() => this.props.editable ? this.state.cells.removeGreenAtOn({x : coordX, y : coordY}): () => {}}
+                                   addRed={() => this.props.editable ? this.state.cells.addRedAtOn({x : coordX, y : coordY}) : () => {}}
+                                   removeRed={() => this.props.editable ? this.state.cells.removeRedAtOn({x : coordX, y : coordY}): () => {}}
                                    />
 
             </td>);
