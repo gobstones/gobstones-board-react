@@ -1,6 +1,6 @@
 import {CellContent} from "./Cell";
 
-type Coord = {
+export type Coord = {
     x: number,
     y: number,
 }

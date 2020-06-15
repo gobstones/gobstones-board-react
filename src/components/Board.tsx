@@ -1,6 +1,7 @@
 import React from "react";
 import Cell from "./Cell";
 import CellManager from "./CellManager";
+import {SizeEditionModal} from "./SizeEditionModal";
 
 type BoardState = {
     columnsQuantity: number;
@@ -100,6 +101,12 @@ export class Board extends React.Component<BoardProps, BoardState> {
                         {this.renderTopArrows()}
                     </div>
                 </div>
+                <SizeEditionModal
+                    initialRows={this.state.rowsQuantity}
+                    initialColumns={this.state.columnsQuantity}
+                    rowQuantitySetter={(x) => this.setState({rowsQuantity: x})}
+                    columnQuantitySetter={(x) => this.setState({columnsQuantity: x})}
+                    headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}/>
             </div>
         );
     }
@@ -124,8 +131,8 @@ export class Board extends React.Component<BoardProps, BoardState> {
         }
     }
 
-    handleChangeXSize(e: any) {
-        if (parseInt(e.target.value) > 0) {
+    handleChangeXSize(e : any){
+        if(parseInt(e.target.value) > 0){
             e.preventDefault()
             this.resetHeader()
             this.setState({columnsQuantity: parseInt(e.target.value)})
