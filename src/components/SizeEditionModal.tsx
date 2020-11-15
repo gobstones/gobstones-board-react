@@ -23,7 +23,7 @@ function NumericInput(props: { label: string, value: number, onChange: (e: numbe
         <label className='modal_label'>{props.label} </label>
         <input className='modal_input' value={props.value} onChange={(e) => handleChange(e)}/>
         <img src={dice} alt='Random' className='random_button'
-             onClick={() => props.onChange(randomInt(1,100))}/>
+             onClick={() => props.onChange(randomInt(1, 100))}/>
     </div>;
 }
 
@@ -50,30 +50,36 @@ export const SizeEditionModal = ({rowQuantitySetter, columnQuantitySetter, headS
             <div className='modal_section'>
                 <label className='section_title'>Board size</label>
                 <div className='modal_section_break'></div>
-                <NumericInput label='Columns: ' value={x} onChange={setX}/>
-                <NumericInput label='Rows: ' value={y} onChange={setY}/>
+                <div className='modal_section_content'>
+                    <NumericInput label='Columns: ' value={x} onChange={setX}/>
+                    <NumericInput label='Rows: ' value={y} onChange={setY}/>
+                </div>
             </div>
             <div className='modal_section'>
                 <label className='section_title'>Head position</label>
                 <div className='modal_section_break'></div>
-                <NumericInput label='At column: ' value={headX} onChange={setHeadX}/>
-                <NumericInput label='At rows: ' value={headY} onChange={setHeadY}/>
+                <div className='modal_section_content'>
+                    <NumericInput label='At column: ' value={headX} onChange={setHeadX}/>
+                    <NumericInput label='At rows: ' value={headY} onChange={setHeadY}/>
+                </div>
             </div>
             <div className='modal_section'>
+                <div className='modal_section'>
+                    <button className='modal_button' onClick={() => {
+                        columnQuantitySetter(5);
+                        rowQuantitySetter(5);
+                        headSetter({x: 0, y: 0})
+                    }}>New Board
+                    </button>
+                </div>
                 <button className='modal_button' onClick={() => {
-                    columnQuantitySetter(5);
-                    rowQuantitySetter(5);
-                    headSetter({x: 0, y: 0})
-                }}>New Board
+                    columnQuantitySetter(y);
+                    rowQuantitySetter(x);
+                    headSetter({x: headX, y: headY})
+                    setShow(false)
+                }}>OK
                 </button>
             </div>
-            <button className='modal_button' onClick={() => {
-                columnQuantitySetter(y);
-                rowQuantitySetter(x);
-                headSetter({x: headX, y: headY})
-                setShow(false)
-            }}>OK
-            </button>
         </div>
     )
 }

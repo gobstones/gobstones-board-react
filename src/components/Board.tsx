@@ -75,6 +75,12 @@ export class Board extends React.Component<BoardProps, BoardState> {
     render(): React.ReactElement {
         return (
             <div>
+                <SizeEditionModal
+                    initialRows={this.state.rowsQuantity}
+                    initialColumns={this.state.columnsQuantity}
+                    rowQuantitySetter={(x) => this.setState({rowsQuantity: x})}
+                    columnQuantitySetter={(x) => this.setState({columnsQuantity: x})}
+                    headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}/>
                 {this.renderSizePanel()}
                 <div className="container">
                     <table className={"gbs_board board"}>
@@ -101,12 +107,6 @@ export class Board extends React.Component<BoardProps, BoardState> {
                         {this.renderTopArrows()}
                     </div>
                 </div>
-                <SizeEditionModal
-                    initialRows={this.state.rowsQuantity}
-                    initialColumns={this.state.columnsQuantity}
-                    rowQuantitySetter={(x) => this.setState({rowsQuantity: x})}
-                    columnQuantitySetter={(x) => this.setState({columnsQuantity: x})}
-                    headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}/>
             </div>
         );
     }

@@ -30,11 +30,8 @@
 }
 
 .modal {
-    left: 55%;
-    margin: -250px 0 0 -32%;
     opacity: 0;
     position: absolute;
-    top: -50%;
     visibility: hidden;
     width: 50%;
     box-shadow: 0 3px 7px rgba(0, 0, 0, .25);
@@ -45,6 +42,9 @@
     background-color: #ddd;
     padding: 20px;
     border-radius: 20px;
+    max-width: 500px;
+    right: 25%;
+    top: -10%
 }
 
 .modal_section_break {
@@ -54,16 +54,28 @@
 
 .modal.active {
     opacity: 1;
-    top: 50%;
     visibility: visible;
+    z-index: 1;
+    top: 10%;
 }
 
 .section_title{
     margin-bottom:2%;
+    font-weight: 600;
 }
 
+.section_subtitle{
+    margin-bottom:2%;
+    font-weight: 100;
+}
+
+.modal_section_content{
+    margin: 0 3%;
+    display: flex;
+}
 .modal_button{
     height: 30px;
     background-color: #b7b7b7;
     border-radius: 4px;
+    margin: 0 5px
 }
