@@ -57,7 +57,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
             columnsQuantity: props.columnsQuantity,
             rowsQuantity: props.rowsQuantity,
             header: props.header,
-            cells: new CellManager((cells : CellManager) => this.setState({cells}))
+            cells: new CellManager(props.editable)
         };
     }
 
@@ -71,7 +71,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
         document.removeEventListener("keydown", this.handleKeyPressed, false);
     }
 
-    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+    render(): React.ReactElement {
         return (
             <div>
                 {this.renderSizePanel()}
@@ -105,88 +105,92 @@ export class Board extends React.Component<BoardProps, BoardState> {
     }
 
     handleRightArrowClickRight() {
-        this.setState({columnsQuantity : this.state.columnsQuantity +1})
+        this.setState({columnsQuantity: this.state.columnsQuantity + 1})
     }
 
     handleRightArrowClickLeft() {
-        if(this.state.columnsQuantity > 1){
-            this.setState({columnsQuantity : this.state.columnsQuantity -1})
+        if (this.state.columnsQuantity > 1) {
+            this.setState({columnsQuantity: this.state.columnsQuantity - 1})
         }
     }
 
     handleTopArrowClickUp() {
-        this.setState({rowsQuantity : this.state.rowsQuantity +1})
+        this.setState({rowsQuantity: this.state.rowsQuantity + 1})
     }
 
     handleTopArrowClickDown() {
-        if(this.state.rowsQuantity > 1){
-            this.setState({rowsQuantity : this.state.rowsQuantity -1})
+        if (this.state.rowsQuantity > 1) {
+            this.setState({rowsQuantity: this.state.rowsQuantity - 1})
         }
     }
 
-    handleChangeXSize(e : any){
-        if(parseInt(e.target.value) > 0){
+    handleChangeXSize(e: any) {
+        if (parseInt(e.target.value) > 0) {
             e.preventDefault()
             this.resetHeader()
-            this.setState({ columnsQuantity: parseInt(e.target.value)})
+            this.setState({columnsQuantity: parseInt(e.target.value)})
         }
     }
 
-    handleChangeYSize(e : any){
-        if(parseInt(e.target.value) > 0){
+    handleChangeYSize(e: any) {
+        if (parseInt(e.target.value) > 0) {
             e.preventDefault()
             this.resetHeader()
             this.setState({rowsQuantity: parseInt(e.target.value)})
         }
     }
 
-    resetHeader(){
-        this.setState({header : {x : 0, y : 0}})
+    resetHeader() {
+        this.setState({header: {x: 0, y: 0}})
     }
 
-    renderSizePanel(){
-        if(this.props.editable){
-            return(
+    renderSizePanel() {
+        if (this.props.editable) {
+            return (
                 <div className="panel">
                     Tamaño:
-                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeXSize(e)} value={this.state.columnsQuantity} />
-                    columnas x                
-                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeYSize(e)} value={this.state.rowsQuantity} />
+                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeXSize(e)}
+                           value={this.state.columnsQuantity}/>
+                    columnas x
+                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeYSize(e)}
+                           value={this.state.rowsQuantity}/>
                     filas
                 </div>
             );
         }
     }
 
-    renderRightArrows(){
-        if(this.props.editable){
-            return(
+    renderRightArrows() {
+        if (this.props.editable) {
+            return (
                 <div>
-                    <button className="right-arrow-button arrow-button" onClick={() => this.handleRightArrowClickRight()}>
-                        <img alt="arrow" className="arrow-img" src= {arrowImgSrc}/>
+                    <button className="right-arrow-button arrow-button"
+                            onClick={() => this.handleRightArrowClickRight()}>
+                        <img alt="arrow" className="arrow-img" src={arrowImgSrc}/>
                     </button>
                     <button className="arrow-button" onClick={() => this.handleRightArrowClickLeft()}>
-                        <img alt="arrow" className="arrow-img arrow-img-left" src= {arrowImgSrc}/>
+                        <img alt="arrow" className="arrow-img arrow-img-left" src={arrowImgSrc}/>
                     </button>
                 </div>
             );
-        }  
+        }
     }
 
-    renderTopArrows(){
-        if(this.props.editable){
-            return(
+    renderTopArrows() {
+        if (this.props.editable) {
+            return (
                 <div className="wrapper">
                     <button className="top-arrow-button arrow-button" onClick={() => this.handleTopArrowClickDown()}>
                         <img alt="arrow" className="top-arrow-img-down arrow-img" src={arrowImgSrc}/>
                     </button>
                     <button className="top-arrow-button arrow-button" onClick={() => this.handleTopArrowClickUp()}>
-                        <img alt="arrow" className="top-arrow-img-up arrow-img" src= {arrowImgSrc}/>
+                        <img alt="arrow" className="top-arrow-img-up arrow-img" src={arrowImgSrc}/>
                     </button>
                 </div>
             );
-        }   
+        }
     }
+
     private mapColumnsBorder() {
         // @ts-ignore
         return [...Array(this.state.columnsQuantity).keys()].map(index => <td
@@ -207,20 +211,39 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
     private mapColumnsContent(coordY: number) {
         //@ts-ignore
-        return [...Array(this.state.columnsQuantity).keys()].map(coordX =>
-            <td key={coordX}><Cell isHeader={this.isHeader(coordX, coordY)}
-                                   addBlue={() => this.props.editable ? this.state.cells.addBlueAtOn({x : coordX, y : coordY}) : () => {}}
-                                   content={this.state.cells.getCell({x : coordX, y : coordY})}
-                                   removeBlue={() => this.props.editable ? this.state.cells.removeBlueAtOn({x : coordX, y : coordY}) : () => {}}
-                                   addBlack={() => this.props.editable ? this.state.cells.addBlackAtOn({x : coordX, y : coordY}) : () => {}}
-                                   removeBlack={() => this.props.editable ? this.state.cells.removeBlackAtOn({x : coordX, y : coordY}) : () => {}}
-                                   addGreen={() => this.props.editable ?this.state.cells.addGreenAtOn({x : coordX, y : coordY}): () => {}}
-                                   removeGreen={() => this.props.editable ? this.state.cells.removeGreenAtOn({x : coordX, y : coordY}): () => {}}
-                                   addRed={() => this.props.editable ? this.state.cells.addRedAtOn({x : coordX, y : coordY}) : () => {}}
-                                   removeRed={() => this.props.editable ? this.state.cells.removeRedAtOn({x : coordX, y : coordY}): () => {}}
-                                   />
+        return [...Array(this.state.columnsQuantity).keys()].map(coordX => {
+            const coord = {x: coordX, y: coordY};
+            return (
+                <td key={coordX}><Cell isHeader={this.isHeader(coordX, coordY)}
+                                       content={this.state.cells.getCell(coord)}
+                                       addBlue={() => this.setState({
+                                           cells: this.state.cells.addBlueAtOn(coord)
+                                       })}
+                                       removeBlue={() => this.setState({
+                                           cells: this.state.cells.removeBlueAtOn(coord)
+                                       })}
+                                       addBlack={() => this.setState({
+                                           cells: this.state.cells.addBlackAtOn(coord)
+                                       })}
+                                       removeBlack={() => this.setState({
+                                           cells: this.state.cells.removeBlackAtOn(coord)
+                                       })}
+                                       addGreen={() => this.setState({
+                                           cells: this.state.cells.addGreenAtOn(coord)
+                                       })}
+                                       removeGreen={() => this.setState({
+                                           cells: this.state.cells.removeGreenAtOn(coord)
+                                       })}
+                                       addRed={() => this.setState({
+                                           cells: this.state.cells.addRedAtOn(coord)
+                                       })}
+                                       removeRed={() => this.setState({
+                                           cells: this.state.cells.removeRedAtOn(coord)
+                                       })}
+                />
 
-            </td>);
+                </td>)
+        });
     }
 
     isHeader(x: number, y: number) {
