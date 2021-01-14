@@ -1,6 +1,5 @@
 import React from 'react';
 import './style/App.css';
-//import Cell from "./components/Cell";
 import "./style/board.css"
 import "./style/cell.css"
 import "./style/stone.css"
