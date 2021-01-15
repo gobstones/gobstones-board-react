@@ -2,7 +2,7 @@ import React from 'react';
 
 type StoneProps = {
     color: string;
-    amount: number;
+    amount: number | string;
     rightClick: () => any;
     leftClick: () => any;
 }

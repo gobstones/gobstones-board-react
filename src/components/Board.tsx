@@ -1,13 +1,17 @@
 import React from "react";
-import Cell from "./Cell";
+import Cell ,{ AttireContent } from "./Cell";
 import CellManager from "./CellManager";
 import {SizeEditionModal} from "./SizeEditionModal";
+import Attire, { AttireJSON } from "./Attire";
+
 
 type BoardState = {
     columnsQuantity: number;
     rowsQuantity: number;
     header: Coord;
     cells: CellManager;
+    attire : Attire;
+
 }
 
 type Coord = {
@@ -19,34 +23,37 @@ type BoardProps = {
     rowsQuantity: number,
     header: Coord,
     editable: boolean,
+    attire:AttireJSON
 }
 
 type BorderProps = {
-    index: number;
+    index?: number;
+    attire?:string;
+
 }
 
-function TopLeftCorner() {
-    return <td className={"gbs_lx gbs_top_left "}/>;
+function TopLeftCorner(props : BorderProps) {
+    return <td style={{backgroundImage : `url(${props.attire})`}} className={"gbs_lx gbs_top_left "}/>;
 }
 
-function TopRightCorner() {
-    return <td className={"gbs_lx gbs_top_right"}/>;
+function TopRightCorner(props: BorderProps) {
+    return <td style={{backgroundImage : `url(${props.attire})`}} className={"gbs_lx gbs_top_right"}/>;
 }
 
 function RightBorder(props: BorderProps) {
-    return <td className="gbs_lv gbs_lvr">{props.index}</td>;
+    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lv gbs_lvr">{props.index}</td>;
 }
 
 function LeftBorder(props: BorderProps) {
-    return <td className="gbs_lv gbs_lvl">{props.index}</td>;
+    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lv gbs_lvl">{props.index}</td>;
 }
 
-function BottomLeftCorner() {
-    return <td className="gbs_lx gbs_bottom_left"/>
+function BottomLeftCorner(props: BorderProps) {
+    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lx gbs_bottom_left"/>
 }
 
-function BottomRightCorner() {
-    return <td className="gbs_lx gbs_bottom_right"/>
+function BottomRightCorner(props: BorderProps) {
+    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lx gbs_bottom_right"/>
 }
 
 const arrowImgSrc = "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png";
@@ -58,9 +65,20 @@ export class Board extends React.Component<BoardProps, BoardState> {
             columnsQuantity: props.columnsQuantity,
             rowsQuantity: props.rowsQuantity,
             header: props.header,
-            cells: new CellManager(props.editable)
+            cells: new CellManager(props.editable),
+            attire : new Attire(this.props.attire)
         };
     }
+
+    // Setea props por default
+    static defaultProps = {
+        columnsQuantity: 2,
+        rowsQuantity: 2,
+        header: { x:0, y:0 },
+        editable: false,
+        attire: new Attire().getAttireJSON()
+    }
+
 
     componentDidMount() {
         document.addEventListener("keydown", e => {
@@ -86,17 +104,17 @@ export class Board extends React.Component<BoardProps, BoardState> {
                     <table className={"gbs_board board"}>
                         <tbody className={""}>
                         <tr className={""}>
-                            <TopLeftCorner/>
-                            {this.mapColumnsBorder()}
-                            <TopRightCorner/>
+                            <TopLeftCorner attire={this.state.attire.getTopLeftCorner()}/>
+                            {this.mapColumnsBorder(this.state.attire.getTopBorder())}
+                            <TopRightCorner attire={this.state.attire.getTopRightCorner()} />
                         </tr>
                         </tbody>
                         {this.mapRaws()}
                         <tbody>
                         <tr>
-                            <BottomLeftCorner/>
-                            {this.mapColumnsBorder()}
-                            <BottomRightCorner/>
+                            <BottomLeftCorner attire={this.state.attire.getBottomLeftCorner()}/>
+                            {this.mapColumnsBorder(this.state.attire.getBottomBorder())}
+                            <BottomRightCorner attire={this.state.attire.getBottomRightCorner()} />
                         </tr>
                         </tbody>
                     </table>
@@ -198,9 +216,10 @@ export class Board extends React.Component<BoardProps, BoardState> {
         }
     }
 
-    private mapColumnsBorder() {
+    private mapColumnsBorder(attire:string) {
         // @ts-ignore
         return [...Array(this.state.columnsQuantity).keys()].map(index => <td
+            style={{backgroundImage : `url(${attire})`}} 
             className={"gbs_lh gbs_lht"} key={index}> {index} </td>);
     }
 
@@ -209,9 +228,9 @@ export class Board extends React.Component<BoardProps, BoardState> {
         return [...Array(this.state.rowsQuantity).keys()].reverse().map(coordY =>
             <tbody key={Math.random()}>
             <tr>
-                <LeftBorder index={coordY}/>
+                <LeftBorder attire={this.state.attire.getLeftBorder()} index={coordY}/>
                 {this.mapColumnsContent(coordY)}
-                <RightBorder index={coordY}/>
+                <RightBorder attire={this.state.attire.getRightBorder()} index={coordY}/>
             </tr>
             </tbody>);
     }
@@ -222,6 +241,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
             const coord = {x: coordX, y: coordY};
             return (
                 <td key={coordX}><Cell isHeader={this.isHeader(coordX, coordY)}
+                                       attire={this.getAttireFor(coordX,coordY)}
                                        content={this.state.cells.getCell(coord)}
                                        addBlue={() => this.setState({
                                            cells: this.state.cells.addBlueAtOn(coord)
@@ -251,6 +271,12 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
                 </td>)
         });
+    }
+
+    getAttireFor(x: number, y: number):AttireContent{
+        const cell = this.state.cells.getCell({x,y})
+        const att  = this.state.attire.getAttireFor(cell.black,cell.blue,cell.green,cell.red)
+        return att
     }
 
     isHeader(x: number, y: number) {
