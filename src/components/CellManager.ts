@@ -102,22 +102,21 @@ export class CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    addBlackAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
+    addNBlueAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
-    addBlueAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
+    addNBlackAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
-    addRedAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
+    addNGreenAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
-    addGreenAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
-
+    addNRedAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
     initializeMatrix(columnsQuantity: number, rowsQuantity: number): CellInfo[][] {
         let cells: CellInfo[][] = new Array(columnsQuantity)

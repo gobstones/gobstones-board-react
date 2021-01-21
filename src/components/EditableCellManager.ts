@@ -31,23 +31,23 @@ export default class EditableCellManager extends CellManager {
         return this;
     }
 
-    addBlackAtOn([x, y]: CellLocation) {
-        this.cells[x][y].n++;
+    addNBlueAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].a = this.cells[x][y].a + n;
         return this;
     }
 
-    addBlueAtOn([x, y]: CellLocation) {
-        this.cells[x][y].a++;
+    addNBlackAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].n = this.cells[x][y].n + n;
         return this;
     }
 
-    addRedAtOn([x, y]: CellLocation) {
-        this.cells[x][y].r++;
+    addNGreenAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].v = this.cells[x][y].v + n;
         return this;
     }
 
-    addGreenAtOn([x, y]: CellLocation) {
-        this.cells[x][y].v++;
+    addNRedAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].r = this.cells[x][y].r + n;
         return this;
     }
 }

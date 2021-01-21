@@ -25,7 +25,7 @@ type BoardProps = {
     boardInfo?: CellInfo[][],
     attire:AttireJSON,
     theme : ThemeStringType
-}   
+}
 
 type BorderProps = {
     index?: number;
@@ -217,7 +217,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     private mapColumnsBorder(attire:string) {
         // @ts-ignore
         return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(index => <td
-            style={{backgroundImage : `url(${attire})`}} 
+            style={{backgroundImage : `url(${attire})`}}
             className={"gbs_lh gbs_lht"} key={index}> {index} </td>);
     }
 
@@ -233,48 +233,88 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             </tbody>);
     }
 
-    private mapColumnsContent(coordY: number) {
+    private mapColumnsContent(y: number) {
         //@ts-ignore
-        return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(coordX => {
-            const coord: CellLocation = [coordX, coordY];
+        return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(x => {
+            const cellLocation: CellLocation = [x, y];
             return (
-                <td key={coordX}><Cell isHeader={this.isHeader(coordX, coordY)}
-                                       attire={this.getAttireFor(coordX,coordY)}
-                                       content={this.state.cells.getCell(coord)}
-                                       addBlue={() => this.setState({
-                                           cells: this.state.cells.addBlueAtOn(coord)
-                                       })}
-                                       removeBlue={() => this.setState({
-                                           cells: this.state.cells.removeBlueAtOn(coord)
-                                       })}
-                                       addBlack={() => this.setState({
-                                           cells: this.state.cells.addBlackAtOn(coord)
-                                       })}
-                                       removeBlack={() => this.setState({
-                                           cells: this.state.cells.removeBlackAtOn(coord)
-                                       })}
-                                       addGreen={() => this.setState({
-                                           cells: this.state.cells.addGreenAtOn(coord)
-                                       })}
-                                       removeGreen={() => this.setState({
-                                           cells: this.state.cells.removeGreenAtOn(coord)
-                                       })}
-                                       addRed={() => this.setState({
-                                           cells: this.state.cells.addRedAtOn(coord)
-                                       })}
-                                       removeRed={() => this.setState({
-                                           cells: this.state.cells.removeRedAtOn(coord)
-                                       })}
+                <td key={x}><Cell isHeader={this.isHeader(x, y)}
+                                  attire={this.getAttireFor(coordX,coordY)}
+                                       content={this.state.cells.getCell(cellLocation)}
+                                  addBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlue(cellLocation, e)}
+                                  removeBlue={() => this.setState({
+                                      cells: this.state.cells.removeBlueAtOn(cellLocation)
+                                  })}
+                                  addBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlack(cellLocation, e)}
+                                  removeBlack={() => this.setState({
+                                      cells: this.state.cells.removeBlackAtOn(cellLocation)
+                                  })}
+                                  addGreen={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddGreen(cellLocation, e)}
+                                  removeGreen={() => this.setState({
+                                      cells: this.state.cells.removeGreenAtOn(cellLocation)
+                                  })}
+                                  addRed={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddRed(cellLocation, e)}
+                                  removeRed={() => this.setState({
+                                      cells: this.state.cells.removeRedAtOn(cellLocation)
+                                  })}
                 />
 
                 </td>)
         });
     }
 
+    private handleAddBlue(cellLocation: [number, number], e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.addNBlueAtOn(cellLocation, n)
+        })
+    }
+
+    private handleAddGreen(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.addNGreenAtOn(cellLocation, n)
+        })
+    }
+
+    private handleAddBlack(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.addNBlackAtOn(cellLocation, n)
+        })
+    }
+
     getAttireFor(x: number, y: number): AttireContent{
         const cell = this.state.cells.getCell([x,y])
         const att  = this.state.attire.getAttireFor(cell.n, cell.a, cell.v, cell.r)
         return att
+    }
+
+    private handleAddRed(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.addNRedAtOn(cellLocation, n)
+        })
     }
 
     isHeader(x: number, y: number) {
@@ -322,4 +362,5 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             this.setState({header: board.head, cells: new EditableCellManager(board.width, board.height, board.board)})
         });
     }
+
 }
