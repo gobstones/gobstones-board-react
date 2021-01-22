@@ -1,104 +1,132 @@
-import {CellContent} from "./Cell";
+import {CellLocation} from "./BoardComponent";
+import {CellInfo} from "@gobstones/gobstones-gbb-parser";
 
-export type Coord = {
-    x: number,
-    y: number,
-}
+export class CellManager {
+    cells: CellInfo[][];
 
-
-export default class CellManager {
-    cells: Map<string, CellContent>;
-    private editable: boolean;
-
-    constructor(editable: boolean) {
-        this.cells = new Map();
-        this.editable = editable;
+    constructor(columnsQuantity: number, rowsQuantity: number, boardInfo: CellInfo[][] | undefined) {
+        this.cells = boardInfo ? boardInfo : this.initializeMatrix(columnsQuantity, rowsQuantity);
     }
 
-    coordToString(coord: Coord) {
-        return ("x:" + coord.x.toString() + " - y:" + coord.y.toString())
+    getCell([x, y]: CellLocation): CellInfo {
+        return this.cells[x][y];
     }
 
-    getCell(coord: Coord): CellContent {
-        if (this.cells.has(this.coordToString(coord))) {
-            // @ts-ignore
-            return this.cells.get(this.coordToString(coord));
-        } else {
-            return {red: 0, green: 0, black: 0, blue: 0};
-        }
+    getColumnsQuantity(): number {
+        return this.cells.length;
     }
 
-    removeBlueAtOn(coord: Coord) {
-        if (this.editable && this.cells.has(this.coordToString(coord)) && this.getCell(coord).blue > 0) {
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).blue--
+    getRowsQuantity(): number {
+        return this.cells[0].length;
+    }
+
+    addColumn(): CellManager {
+        this.cells.push(new Array(this.getRowsQuantity()));
+        for (let i = 0; i < this.getRowsQuantity(); i++) {
+            this.cells[this.cells.length - 1][i] = {a: 0, r: 0, v: 0, n: 0}
         }
         return this;
     }
 
-    removeBlackAtOn(coord: Coord) {
-        if (this.editable && this.cells.has(this.coordToString(coord)) && this.getCell(coord).black > 0) {
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).black--
+    removeColumn(): CellManager {
+        this.cells.pop();
+        return this;
+    }
+
+    addRow(): CellManager {
+        for (let i = 0; i < this.getColumnsQuantity(); i++) {
+            this.cells[i].push({a: 0, r: 0, v: 0, n: 0})
         }
         return this;
     }
 
-    removeRedAtOn(coord: Coord) {
-        if (this.editable && this.cells.has(this.coordToString(coord)) && this.getCell(coord).red > 0) {
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).red--
+    removeRow(): CellManager {
+        for (let i = 0; i < this.getColumnsQuantity(); i++) {
+            this.cells[i].pop();
         }
         return this;
     }
 
-    removeGreenAtOn(coord: Coord) {
-        if (this.editable && this.cells.has(this.coordToString(coord)) && this.getCell(coord).green > 0) {
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).green--
+    setColumnsQuantity(n: number): CellManager {
+        const diff = n - this.getColumnsQuantity();
+        return diff > 0 ? this.addColumns(diff) : this.removeColumns(-diff);
+    }
+
+    addColumns(x: number): CellManager {
+        for (let i = 0; i < x; i++) {
+            this.addColumn();
         }
         return this;
     }
 
-    addBlackAtOn(coord: Coord) {
-        if(this.editable){
-            this.initializeCellIfNeeded(coord);
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).black++
+    private removeColumns(x: number): CellManager {
+        for (let i = 0; i < x; i++) {
+            this.removeColumn();
         }
         return this;
     }
 
-    addBlueAtOn(coord: Coord) {
-        if(this.editable){
-            this.initializeCellIfNeeded(coord);
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).blue++;
+    setRowsQuantity(x: number): CellManager {
+        const diff = x - this.getRowsQuantity();
+        return diff > 0 ? this.addRows(diff) : this.removeRows(-diff)
+    }
+
+    private addRows(x: number) {
+        for (let i = 0; i < x; i++) {
+            this.addRow();
         }
         return this;
     }
 
-    addRedAtOn(coord: Coord) {
-        if(this.editable){
-            this.initializeCellIfNeeded(coord);
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).red++
+    private removeRows(x: number): CellManager {
+        for (let i = 0; i < x; i++) {
+            this.removeRow();
         }
         return this;
     }
 
-    addGreenAtOn(coord: Coord) {
-        if(this.editable){
-            this.initializeCellIfNeeded(coord);
-            // @ts-ignore
-            this.cells.get(this.coordToString(coord)).green++
-        }
-        return this;
-    }
 
-    private initializeCellIfNeeded(coord: Coord) {
-        if (!this.cells.has(this.coordToString(coord))) {
-            this.cells.set(this.coordToString(coord), {red: 0, green: 0, black: 0, blue: 0})
+    removeBlueAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+    removeBlackAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+    removeRedAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+    removeGreenAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+    addBlackAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+    addBlueAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+    addRedAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+    addGreenAtOn([x, y]: CellLocation): CellManager {
+        throw  new Error("Abstract Method. Subclass responsibility");
+    };
+
+
+    initializeMatrix(columnsQuantity: number, rowsQuantity: number): CellInfo[][] {
+        let cells: CellInfo[][] = new Array(columnsQuantity)
+        for (let i = 0; i < columnsQuantity; i++) {
+            cells[i] = new Array(rowsQuantity);
+            for (let j = 0; j < rowsQuantity; j++) {
+                cells[i][j] = {a: 0, r: 0, n: 0, v: 0}
+            }
         }
-    }
+        return cells;
+    };
 }

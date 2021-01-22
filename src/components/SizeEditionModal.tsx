@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
 import '../style/size-edition.css'
-import {Coord} from "./CellManager";
 import dice from '../img/dice.svg'
 import {randomInt} from "../utils/random";
+import {CellLocation} from "./BoardComponent";
 
 interface Props {
     initialRows: number;
     initialColumns: number;
     rowQuantitySetter: (quantity: number) => void;
     columnQuantitySetter: (quantity: number) => void;
-    initialHead: Coord;
-    headSetter: (coord: Coord) => void;
+    initialHead: CellLocation;
+    headSetter: (coord: CellLocation) => void;
 }
 
 function NumericInput(props: { label: string, value: number, onChange: (e: number) => void }) {
@@ -27,12 +27,19 @@ function NumericInput(props: { label: string, value: number, onChange: (e: numbe
     </div>;
 }
 
-export const SizeEditionModal = ({rowQuantitySetter, columnQuantitySetter, headSetter, initialColumns, initialRows, initialHead}: Props) => {
+export const SizeEditionModal = ({
+                                     rowQuantitySetter,
+                                     columnQuantitySetter,
+                                     headSetter,
+                                     initialColumns,
+                                     initialRows,
+                                     initialHead
+                                 }: Props) => {
     const [show, setShow] = useState(false)
     const [x, setX]: [number, (x: number) => void] = useState(initialColumns);
     const [y, setY]: [number, (x: number) => void] = useState(initialRows);
-    const [headY, setHeadY]: [number, (x: number) => void] = useState(initialHead.y);
-    const [headX, setHeadX]: [number, (x: number) => void] = useState(initialHead.x);
+    const [headY, setHeadY]: [number, (x: number) => void] = useState(initialHead[1]);
+    const [headX, setHeadX]: [number, (x: number) => void] = useState(initialHead[0]);
 
     const listenOpenShortcut = (e: KeyboardEvent) => {
         if (e.key === 'g' && e.ctrlKey) {
@@ -68,14 +75,14 @@ export const SizeEditionModal = ({rowQuantitySetter, columnQuantitySetter, headS
                     <button className='modal_button' onClick={() => {
                         columnQuantitySetter(5);
                         rowQuantitySetter(5);
-                        headSetter({x: 0, y: 0})
+                        headSetter([0, 0])
                     }}>New Board
                     </button>
                 </div>
                 <button className='modal_button' onClick={() => {
-                    columnQuantitySetter(y);
-                    rowQuantitySetter(x);
-                    headSetter({x: headX, y: headY})
+                    columnQuantitySetter(x);
+                    rowQuantitySetter(y);
+                    headSetter([headX, headY])
                     setShow(false)
                 }}>OK
                 </button>

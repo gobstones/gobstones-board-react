@@ -3,12 +3,20 @@ import './style/App.css';
 import "./style/board.css"
 import "./style/cell.css"
 import "./style/stone.css"
-import {Board} from "./components/Board";
+import {CellInfo} from "@gobstones/gobstones-gbb-parser";
 import { attireTest } from "./utils/attireTest"
+import {BoardComponent} from './components/BoardComponent';
 
 const App: React.FC = () => {
+    let boardInfo: CellInfo[][] = new Array(5);
+    for (let i = 0; i < 5; i++) {
+        boardInfo[i] = new Array(7);
+        for (let j = 0; j < 7; j++) {
+            boardInfo[i][j] = {a: 1, n: 0, r: 3, v: 1}
+        }
+    }
     return (
-            <Board editable attire={attireTest} columnsQuantity={5} rowsQuantity={7} header={{x : 2,y :0}} />
+        <BoardComponent editable={true} attire={attireTest} columnsQuantity={5} rowsQuantity={7} header={[2, 0]} boardInfo={boardInfo}/>
     );
 };
 
