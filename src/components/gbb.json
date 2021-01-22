@@ -1,0 +1,20 @@
+{
+  "head": {
+    "x": 1,
+    "y": 1
+  },
+  "cells": [
+    {
+      "location": {
+        "x": 1,
+        "y": 4
+      },
+      "content": {
+        "azul": 1,
+        "negro": 2,
+        "rojo": 5,
+        "verde": 4
+      }
+    }
+  ]
+}
