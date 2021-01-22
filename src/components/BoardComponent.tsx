@@ -1,33 +1,31 @@
-import React from "react";
-import Cell ,{ AttireContent } from "./Cell";
-import CellManager from "./CellManager";
+import React, {ChangeEvent} from "react";
+import Cell, { AttireContent } from "./Cell";
+import EditableCellManager from "./EditableCellManager";
+import {StaticCellManager} from "./StaticCellManager";
+import {CellManager} from "./CellManager";
 import {SizeEditionModal} from "./SizeEditionModal";
 import Theme, { AbstractTheme, ClassicTheme, ThemeStringType } from "./Theme";
+import {CellInfo, GBB} from "@gobstones/gobstones-gbb-parser";
 import Attire, { AttireJSON } from "./Attire";
 
-
 type BoardState = {
-    columnsQuantity: number;
-    rowsQuantity: number;
-    header: Coord;
+    header: CellLocation;
     cells: CellManager;
     attire : Attire;
     theme : AbstractTheme;
 }
 
-type Coord = {
-    x: number,
-    y: number,
-}
+export type CellLocation = [number, number];
 
 type BoardProps = {
     columnsQuantity: number,
     rowsQuantity: number,
-    header: Coord,
+    header: CellLocation,
     editable: boolean,
+    boardInfo?: CellInfo[][],
     attire:AttireJSON,
     theme : ThemeStringType
-}
+}   
 
 type BorderProps = {
     index?: number;
@@ -60,16 +58,15 @@ function BottomRightCorner(props: BorderProps) {
 
 const arrowImgSrc = "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png";
 
-export class Board extends React.Component<BoardProps, BoardState> {
-    constructor(props: any) {
+export class BoardComponent extends React.Component<BoardProps, BoardState> {
+    constructor(props: BoardProps) {
         super(props);
         this.state = {
-            columnsQuantity: props.columnsQuantity,
-            rowsQuantity: props.rowsQuantity,
             header: props.header,
-            cells: new CellManager(props.editable),
-            attire : new Attire(this.props.attire),
-            theme : new Theme().getThemeFor(this.props.theme)
+            cells: props.editable ? new EditableCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo)
+                : new StaticCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo),
+                attire : new Attire(this.props.attire),
+                theme : new Theme().getThemeFor(this.props.theme)
         };
     }
 
@@ -98,10 +95,10 @@ export class Board extends React.Component<BoardProps, BoardState> {
         return (
             <div>
                 <SizeEditionModal
-                    initialRows={this.state.rowsQuantity}
-                    initialColumns={this.state.columnsQuantity}
-                    rowQuantitySetter={(x) => this.setState({rowsQuantity: x})}
-                    columnQuantitySetter={(x) => this.setState({columnsQuantity: x})}
+                    initialRows={this.state.cells.getRowsQuantity()}
+                    initialColumns={this.state.cells.getColumnsQuantity()}
+                    rowQuantitySetter={(x) => this.handleChangeYSize(x)}
+                    columnQuantitySetter={(x) => this.handleChangeXSize(x)}
                     headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}/>
                 {this.renderSizePanel()}
                 <div className="container">
@@ -129,48 +126,43 @@ export class Board extends React.Component<BoardProps, BoardState> {
                         {this.renderTopArrows()}
                     </div>
                 </div>
+                <input type='file' onChange={(e) => this.handleFileChange(e)}/>
             </div>
         );
     }
 
     handleRightArrowClickRight() {
-        this.setState({columnsQuantity: this.state.columnsQuantity + 1})
+        this.setState({cells: this.state.cells.addColumn()})
     }
 
     handleRightArrowClickLeft() {
-        if (this.state.columnsQuantity > 1) {
-            this.setState({columnsQuantity: this.state.columnsQuantity - 1})
-        }
+        this.setState({cells: this.state.cells.removeColumn()})
     }
 
     handleTopArrowClickUp() {
-        this.setState({rowsQuantity: this.state.rowsQuantity + 1})
+        this.setState({cells: this.state.cells.removeRow()})
     }
 
     handleTopArrowClickDown() {
-        if (this.state.rowsQuantity > 1) {
-            this.setState({rowsQuantity: this.state.rowsQuantity - 1})
+        this.setState({cells: this.state.cells.addRow()})
+    }
+
+    handleChangeXSize(n: number) {
+        if (n > 0) {
+            this.resetHeader();
+            this.state.cells.setColumnsQuantity(n);
         }
     }
 
-    handleChangeXSize(e : any){
-        if(parseInt(e.target.value) > 0){
-            e.preventDefault()
-            this.resetHeader()
-            this.setState({columnsQuantity: parseInt(e.target.value)})
-        }
-    }
-
-    handleChangeYSize(e: any) {
-        if (parseInt(e.target.value) > 0) {
-            e.preventDefault()
-            this.resetHeader()
-            this.setState({rowsQuantity: parseInt(e.target.value)})
+    handleChangeYSize(n: number) {
+        if (n > 0) {
+            this.resetHeader();
+            this.state.cells.setRowsQuantity(n);
         }
     }
 
     resetHeader() {
-        this.setState({header: {x: 0, y: 0}})
+        this.setState({header: [0, 0]})
     }
 
     renderSizePanel() {
@@ -178,11 +170,13 @@ export class Board extends React.Component<BoardProps, BoardState> {
             return (
                 <div className="panel">
                     Tamaño:
-                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeXSize(e)}
-                           value={this.state.columnsQuantity}/>
+                    <input className="input-size" type="number"
+                           onChange={(e: any) => this.handleChangeXSize(e.target.value)}
+                           value={this.state.cells.getColumnsQuantity()}/>
                     columnas x
-                    <input className="input-size" type="number" onChange={(e: any) => this.handleChangeYSize(e)}
-                           value={this.state.rowsQuantity}/>
+                    <input className="input-size" type="number"
+                           onChange={(e: any) => this.handleChangeYSize(e.target.value)}
+                           value={this.state.cells.getRowsQuantity()}/>
                     filas
                 </div>
             );
@@ -222,14 +216,14 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
     private mapColumnsBorder(attire:string) {
         // @ts-ignore
-        return [...Array(this.state.columnsQuantity).keys()].map(index => <td
+        return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(index => <td
             style={{backgroundImage : `url(${attire})`}} 
             className={"gbs_lh gbs_lht"} key={index}> {index} </td>);
     }
 
     private mapRaws() {
         // @ts-ignore
-        return [...Array(this.state.rowsQuantity).keys()].reverse().map(coordY =>
+        return [...Array(this.state.cells.getRowsQuantity()).keys()].reverse().map(coordY =>
             <tbody key={Math.random()}>
             <tr>
                 <LeftBorder attire={this.state.attire.getLeftBorder()} index={coordY}/>
@@ -241,8 +235,8 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
     private mapColumnsContent(coordY: number) {
         //@ts-ignore
-        return [...Array(this.state.columnsQuantity).keys()].map(coordX => {
-            const coord = {x: coordX, y: coordY};
+        return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(coordX => {
+            const coord: CellLocation = [coordX, coordY];
             return (
                 <td key={coordX}><Cell isHeader={this.isHeader(coordX, coordY)}
                                        attire={this.getAttireFor(coordX,coordY)}
@@ -277,46 +271,55 @@ export class Board extends React.Component<BoardProps, BoardState> {
         });
     }
 
-    getAttireFor(x: number, y: number):AttireContent{
-        const cell = this.state.cells.getCell({x,y})
-        const att  = this.state.attire.getAttireFor(cell.black,cell.blue,cell.green,cell.red)
+    getAttireFor(x: number, y: number): AttireContent{
+        const cell = this.state.cells.getCell([x,y])
+        const att  = this.state.attire.getAttireFor(cell.n, cell.a, cell.v, cell.r)
         return att
     }
 
     isHeader(x: number, y: number) {
-        return x === this.state.header.x && y === this.state.header.y
+        return x === this.state.header[0] && y === this.state.header[1]
     }
 
     handleKeyPressed(e: KeyboardEvent) {
         switch (e.key) {
             case "ArrowUp" :
-                const newHeaderU = {
-                    x: this.state.header.x,
-                    y: Math.min(this.state.header.y + 1, this.state.rowsQuantity - 1)
-                }
-                this.setState({header: newHeaderU})
+                const newHeaderU: CellLocation = [this.state.header[0], Math.min(this.state.header[1] + 1, this.state.cells.getRowsQuantity() - 1)];
+                this.setState({header: newHeaderU});
                 break;
             case "ArrowDown" :
-                const newHeaderD = {
-                    x: this.state.header.x,
-                    y: Math.max(this.state.header.y - 1, 0)
-                };
+                const newHeaderD: CellLocation = [
+                    this.state.header[0],
+                    Math.max(this.state.header[1] - 1, 0)
+                ];
                 this.setState({header: newHeaderD})
                 break;
             case "ArrowRight" :
-                const newHeaderR = {
-                    x: Math.min(this.state.header.x + 1, this.state.columnsQuantity - 1),
-                    y: this.state.header.y,
-                };
+                const newHeaderR: CellLocation = [
+                    Math.min(this.state.header[0] + 1, this.state.cells.getColumnsQuantity() - 1),
+                    this.state.header[1],
+                ];
                 this.setState({header: newHeaderR})
                 break;
             case "ArrowLeft" :
-                const newHeaderL = {
-                    x: Math.max(this.state.header.x - 1, 0),
-                    y: this.state.header.y,
-                }
+                const newHeaderL: CellLocation = [
+                    Math.max(this.state.header[0] - 1, 0),
+                    this.state.header[1],
+                ]
                 this.setState({header: newHeaderL})
                 break;
         }
+    }
+
+    private handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+        // @ts-ignore
+        const header: Coord = this.parseBoardFile(event.target.files[0]);
+    }
+
+    private parseBoardFile(file: File) {
+        //@ts-ignore
+        file.text().then(text => GBB.parse(text)).then(board => {
+            this.setState({header: board.head, cells: new EditableCellManager(board.width, board.height, board.board)})
+        });
     }
 }
