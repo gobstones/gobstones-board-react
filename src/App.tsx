@@ -8,7 +8,7 @@ import { attireTest } from "./utils/attireTest"
 
 const App: React.FC = () => {
     return (
-            <Board editable attire={attireTest} columnsQuantity={5} rowsQuantity={7} header={{x : 2,y :0}} />
+            <Board editable theme="classic"  columnsQuantity={5} rowsQuantity={7} header={{x : 2,y :0}} />
     );
 };
 

@@ -1,3 +1,5 @@
+@import "./themes.css";
+
 .gbs_pointer {
   cursor: pointer;
 }
@@ -44,7 +46,8 @@ table.gbs_board {
   vertical-align: middle;
   border-style: none;
   border: solid black 0px;
-  background: #ddd;
+  color:var(--border-number-color);
+  background: var(--border-color);
   width: 15px;
 }
 
@@ -54,7 +57,8 @@ table.gbs_board {
   vertical-align: middle;
   border-style: none;
   border: solid black 0px;
-  background: #ddd;
+  color:var(--border-number-color);
+  background: var(--border-color);
   height: 15px;
 }
 
@@ -62,53 +66,34 @@ table.gbs_board {
   /* corner */
   border-style: none;
   border: solid black 0px;
-  background: #ddd;
+  color:var(--border-number-color);
+  background: var(--border-color);
   width: 15px;
   height: 15px;
-}
-
-.gbs_board td.gbs_lht {
-  background-image: var(--top-background-url);
-}
-
-.gbs_board td.gbs_lhb {
-  background-image: var(--bottom-background-url);
-}
-
-.gbs_board td.gbs_lvl {
-  background-image: var(--left-background-url);
-}
-
-.gbs_board td.gbs_lvr {
-  background-image: var(--right-background-url);
 }
 
 .gbs_board td.gbs_top_left {
   -webkit-border-top-left-radius: 10px;
   -moz-border-top-left-radius: 10px;
   border-top-left-radius: 10px;
-  background-image: var(--top-left-background-url);
 }
 
 .gbs_board td.gbs_top_right {
   -webkit-border-top-right-radius: 10px;
   -moz-border-top-right-radius: 10px;
   border-top-right-radius: 10px;
-  background-image: var(--top-right-background-url);
 }
 
 .gbs_board td.gbs_bottom_left {
   -webkit-border-bottom-left-radius: 10px;
   -moz-border-bottom-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  background-image: var(--bottom-left-background-url);
 }
 
 .gbs_board td.gbs_bottom_right {
   -webkit-border-bottom-right-radius: 10px;
   -moz-border-bottom-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  background-image: var(--bottom-right-background-url);
 }
 
 .gbs_boom, .gbs_boom::after {

@@ -2,6 +2,7 @@ import React from "react";
 import Cell ,{ AttireContent } from "./Cell";
 import CellManager from "./CellManager";
 import {SizeEditionModal} from "./SizeEditionModal";
+import Theme, { AbstractTheme, ClassicTheme, ThemeStringType } from "./Theme";
 import Attire, { AttireJSON } from "./Attire";
 
 
@@ -11,25 +12,26 @@ type BoardState = {
     header: Coord;
     cells: CellManager;
     attire : Attire;
-
+    theme : AbstractTheme;
 }
 
 type Coord = {
     x: number,
     y: number,
 }
+
 type BoardProps = {
     columnsQuantity: number,
     rowsQuantity: number,
     header: Coord,
     editable: boolean,
-    attire:AttireJSON
+    attire:AttireJSON,
+    theme : ThemeStringType
 }
 
 type BorderProps = {
     index?: number;
     attire?:string;
-
 }
 
 function TopLeftCorner(props : BorderProps) {
@@ -66,7 +68,8 @@ export class Board extends React.Component<BoardProps, BoardState> {
             rowsQuantity: props.rowsQuantity,
             header: props.header,
             cells: new CellManager(props.editable),
-            attire : new Attire(this.props.attire)
+            attire : new Attire(this.props.attire),
+            theme : new Theme().getThemeFor(this.props.theme)
         };
     }
 
@@ -76,7 +79,8 @@ export class Board extends React.Component<BoardProps, BoardState> {
         rowsQuantity: 2,
         header: { x:0, y:0 },
         editable: false,
-        attire: new Attire().getAttireJSON()
+        attire: new Attire().getAttireJSON(),
+        theme : new ClassicTheme()
     }
 
 

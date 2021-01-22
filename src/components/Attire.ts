@@ -23,24 +23,25 @@ export type Borders = {
     topRight :string,
 }
 
+const basicAttire = {
+    enabled : false,
+    rules : [],
+    borders : {
+        bottom :"",
+        bottomLeft :"",
+        bottomRight :"",
+        left :"",
+        right :"",
+        top:"",
+        topLeft : "",
+        topRight :"",
+    },
+}
+
 export default class Attire {
     attire :AttireJSON;
     constructor(att? : AttireJSON){
-        const basicAttire = {
-            enabled : false,
-            rules : [],
-            borders : {
-                bottom :"",
-                bottomLeft :"",
-                bottomRight :"",
-                left :"",
-                right :"",
-                top:"",
-                topLeft : "",
-                topRight :"",
-            },
-        }
-            this.attire = att? att : basicAttire;
+            this.attire = att ? att : basicAttire;
     }
 
     getAttireJSON() : AttireJSON {

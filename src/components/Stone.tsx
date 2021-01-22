@@ -35,7 +35,7 @@ function Stone({color, leftClick, amount, rightClick}: StoneProps) {
     return (
         <div onClick={leftClick}
              onContextMenu={(e) => {e.preventDefault();rightClick()}}
-             className={`  gbs_color-${color} gbs_stone gbs_tooltip gbs_${color} ${cssClass()} `}>
+             className={`gbs_color-${color} gbs_stone gbs_tooltip gbs_${color} ${cssClass()}`}>
             <span className="gbs_stone_amount">{amountText()}</span>
         </div>
     );
