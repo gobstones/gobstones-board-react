@@ -239,19 +239,23 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(x => {
             const cellLocation: CellLocation = [x, y];
             return (
-                <td key={x}><Cell isHeader={this.isHeader(x, y)}
-                                  attire={this.getAttireFor(x, y)}
-                                  content={this.state.cells.getCell(cellLocation)}
-                                  addBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlue(cellLocation, e)}
-                                  removeBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlue(cellLocation, e)}
-                                  addBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlack(cellLocation, e)}
-                                  removeBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlack(cellLocation, e)}
-                                  addGreen={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddGreen(cellLocation, e)}
-                                  removeGreen={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveGreen(cellLocation, e)}
-                                  addRed={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddRed(cellLocation, e)}
-                                  removeRed={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveRed(cellLocation, e)}
-                />
-
+                <td onClickCapture={(e) => {
+                    if (e.ctrlKey) {
+                        e.stopPropagation();
+                        this.setState({header: cellLocation})
+                    }
+                }} key={x}>
+                    <Cell isHeader={this.isHeader(x, y)}
+                          attire={this.getAttireFor(x, y)}content={this.state.cells.getCell(cellLocation)}
+                          addBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlue(cellLocation, e)}
+                          removeBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlue(cellLocation, e)}
+                          addBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlack(cellLocation, e)}
+                          removeBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlack(cellLocation, e)}
+                          addGreen={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddGreen(cellLocation, e)}
+                          removeGreen={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveGreen(cellLocation, e)}
+                          addRed={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddRed(cellLocation, e)}
+                          removeRed={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveRed(cellLocation, e)}
+                    />
                 </td>)
         });
     }
@@ -364,7 +368,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             cells: this.state.cells.removeNRedAt(cellLocation, n)
         })
     }
-    
+
     private handleExportGBB(e: React.MouseEvent<HTMLButtonElement>) {
         const board = {
             format: 'GBB/1.0',
