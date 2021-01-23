@@ -1,3 +1,5 @@
+@import "themes.css";
+
 .gbs_pointer {
   cursor: pointer;
 }
@@ -13,8 +15,8 @@
 
 .gbs_gh {
   /* position of the header in the board */
-  background: rgba(221, 221, 136, 0.7);
-  outline-color : #0A9500 ;
+  background: var(--header-background-color);
+  outline-color : var(--header-outline-color);
   outline-width :3px;
   outline-style: solid ;
 }
@@ -37,6 +39,10 @@ table.gbs_gc {
   border: solid rgb(240, 217, 217) 0px;
 }
 
+.gbs_gc{
+  background-color: var(--cell-background-color);
+}
+
 .gbs_gc tr {
   border-style: none;
   border: 0px;
@@ -49,8 +55,6 @@ table.gbs_gc {
   width: 15px;
   height: 15px;
   text-align: center;
-  vertical-align: middle;
-  color: #F3F3E9;
 }
 
 .gbs_gc td div {

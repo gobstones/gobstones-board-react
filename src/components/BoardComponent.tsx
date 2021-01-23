@@ -4,6 +4,7 @@ import EditableCellManager from "./EditableCellManager";
 import {StaticCellManager} from "./StaticCellManager";
 import {CellManager} from "./CellManager";
 import {SizeEditionModal} from "./SizeEditionModal";
+import Theme, { AbstractTheme, ClassicTheme, ThemeStringType } from "./Theme";
 import {CellInfo, GBB} from "@gobstones/gobstones-gbb-parser";
 import Attire, { AttireJSON } from "./Attire";
 
@@ -11,7 +12,7 @@ type BoardState = {
     header: CellLocation;
     cells: CellManager;
     attire : Attire;
-
+    theme : AbstractTheme;
 }
 
 export type CellLocation = [number, number];
@@ -22,13 +23,13 @@ type BoardProps = {
     header: CellLocation,
     editable: boolean,
     boardInfo?: CellInfo[][],
-    attire: AttireJSON
+    attire:AttireJSON,
+    theme : ThemeStringType
 }   
 
 type BorderProps = {
     index?: number;
     attire?:string;
-
 }
 
 function TopLeftCorner(props : BorderProps) {
@@ -64,7 +65,8 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             header: props.header,
             cells: props.editable ? new EditableCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo)
                 : new StaticCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo),
-                attire : new Attire(this.props.attire)
+                attire : new Attire(this.props.attire),
+                theme : new Theme().getThemeFor(this.props.theme)
         };
     }
 
@@ -74,7 +76,8 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         rowsQuantity: 2,
         header: { x:0, y:0 },
         editable: false,
-        attire: new Attire().getAttireJSON()
+        attire: new Attire().getAttireJSON(),
+        theme : new ClassicTheme()
     }
 
 

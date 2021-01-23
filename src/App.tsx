@@ -16,7 +16,15 @@ const App: React.FC = () => {
         }
     }
     return (
-        <BoardComponent editable={true} attire={attireTest} columnsQuantity={5} rowsQuantity={7} header={[2, 0]} boardInfo={boardInfo}/>
+        <BoardComponent 
+            editable={true} 
+            attire={attireTest} 
+            columnsQuantity={5} 
+            rowsQuantity={7} 
+            header={[2, 0]} 
+            boardInfo={boardInfo}
+            theme="modern"
+        />
     );
 };
 

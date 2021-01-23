@@ -1,0 +1,79 @@
+:root {
+
+    /* Board Borders */
+    --border-color : #ddd; /*red #ddd*/
+    --border-number-color : black;
+
+    /* Cell */
+    --cell-background-color: white;
+
+    /* Amount of stones color */
+    --amount-color : #F3F3E9;
+  
+    /* Header base theme */
+    --header-background-color : rgba(221, 221, 136, 0.7);
+    --header-outline-color : #0A9500 ;
+
+    /* Default theme */
+    --black-stone-img : url(../img/classic/Stones_Black.svg);
+    --blue-stone-img : url(../img/classic/Stones_Blue.svg);
+    --red-stone-img : url(../img/classic/Stones_Red.svg);
+    --green-stone-img : url(../img/classic/Stones_Green.svg);
+
+    /* Classic */
+    --red-stone-img-classic : url(../img/classic/Stones_Red.svg);
+    --black-stone-img-classic : url(../img/classic/Stones_Black.svg);
+    --green-stone-img-classic : url(../img/classic/Stones_Green.svg);
+    --blue-stone-img-classic : url(../img/classic/Stones_Blue.svg);
+
+    /* Deuteranope */
+    --red-stone-img-deuteranope : url(../img/deuteranope/Stones_Red.svg);
+    --black-stone-img-deuteranope : url(../img/deuteranope/Stones_Black.svg);
+    --green-stone-img-deuteranope : url(../img/deuteranope/Stones_Green.svg);
+    --blue-stone-img-deuteranope : url(../img/deuteranope/Stones_Blue.svg);
+
+    /* Flat */
+    --red-stone-img-flat : url(../img/flat/Stones_Red.svg);
+    --black-stone-img-flat : url(../img/flat/Stones_Black.svg);
+    --green-stone-img-flat : url(../img/flat/Stones_Green.svg);
+    --blue-stone-img-flat : url(../img/flat/Stones_Blue.svg);
+
+    /* High-contrast */
+    --red-stone-img-high-contrast : url(../img/high_contrast/Stones_Red.svg);
+    --black-stone-img-high-contrast : url(../img/high_contrast/Stones_Black.svg);
+    --green-stone-img-high-contrast : url(../img/high_contrast/Stones_Green.svg);
+    --blue-stone-img-high-contrast : url(../img/high_contrast/Stones_Blue.svg);
+
+    /* Lines */
+    --red-stone-img-lines : url(../img/lines/Stones_Red.svg);
+    --black-stone-img-lines : url(../img/lines/Stones_Black.svg);
+    --green-stone-img-lines : url(../img/lines/Stones_Green.svg);
+    --blue-stone-img-lines : url(../img/lines/Stones_Blue.svg);
+
+    /* Modern */
+    --red-stone-img-modern : url(../img/modern/Stones_Red.svg);
+    --black-stone-img-modern : url(../img/modern/Stones_Black.svg);
+    --green-stone-img-modern : url(../img/modern/Stones_Green.svg);
+    --blue-stone-img-modern : url(../img/modern/Stones_Blue.svg);
+
+    /* Protanope */
+    --red-stone-img-protanope : url(../img/protanope/Stones_Red.svg);
+    --black-stone-img-protanope : url(../img/protanope/Stones_Black.svg);
+    --green-stone-img-protanope : url(../img/protanope/Stones_Green.svg);
+    --blue-stone-img-protanope : url(../img/protanope/Stones_Blue.svg);
+
+    /* Shapes */
+    --red-stone-img-shapes : url(../img/shapes/Stones_Red.svg);
+    --black-stone-img-shapes : url(../img/shapes/Stones_Black.svg);
+    --green-stone-img-shapes : url(../img/shapes/Stones_Green.svg);
+    --blue-stone-img-shapes : url(../img/shapes/Stones_Blue.svg);
+
+    /* Tritanope */
+    --red-stone-img-tritanope : url(../img/tritanope/Stones_Red.svg);
+    --black-stone-img-tritanope : url(../img/tritanope/Stones_Black.svg);
+    --green-stone-img-tritanope : url(../img/tritanope/Stones_Green.svg);
+    --blue-stone-img-tritanope : url(../img/tritanope/Stones_Blue.svg);  
+
+    /* To add other themes, declare the four variables following the convention --red-stone-img-{themeName} */
+  
+  }

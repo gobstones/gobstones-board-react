@@ -11,13 +11,6 @@ export type AttireContent = {
     text:string
 }
 
-export interface CellContent {
-    red: number | string;
-    green:number | string;
-    black:number | string;
-    blue:number | string;
-}
-
 type CellProps = {
     isHeader: boolean;
     content: CellInfo;
