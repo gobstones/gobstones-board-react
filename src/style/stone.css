@@ -1,5 +1,10 @@
 @import "./themes.css";
-.gbs_pointer {
+
+.gbs_stone_amount {
+    color:var(--amount-color)
+}
+
+.gbs_pointer {  
     cursor: pointer;
 }
 
