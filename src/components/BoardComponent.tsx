@@ -1,12 +1,12 @@
 import React, {ChangeEvent} from "react";
-import Cell, { AttireContent } from "./Cell";
+import Cell, {AttireContent} from "./Cell";
 import EditableCellManager from "./EditableCellManager";
 import {StaticCellManager} from "./StaticCellManager";
 import {CellManager} from "./CellManager";
 import {SizeEditionModal} from "./SizeEditionModal";
-import Theme, { AbstractTheme, ClassicTheme, ThemeStringType } from "./Theme";
+import Theme, {AbstractTheme, ClassicTheme, ThemeStringType} from "./Theme";
 import {CellInfo, GBB} from "@gobstones/gobstones-gbb-parser";
-import Attire, { AttireJSON } from "./Attire";
+import Attire, {AttireJSON} from "./Attire";
 
 type BoardState = {
     header: CellLocation;
@@ -239,8 +239,8 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             const cellLocation: CellLocation = [x, y];
             return (
                 <td key={x}><Cell isHeader={this.isHeader(x, y)}
-                                  attire={this.getAttireFor(coordX,coordY)}
-                                       content={this.state.cells.getCell(cellLocation)}
+                                  attire={this.getAttireFor(x, y)}
+                                  content={this.state.cells.getCell(cellLocation)}
                                   addBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlue(cellLocation, e)}
                                   removeBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlue(cellLocation, e)}
                                   addBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlack(cellLocation, e)}
@@ -256,36 +256,21 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     }
 
     private handleAddBlue(cellLocation: [number, number], e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.addNBlueAtOn(cellLocation, n)
         })
     }
 
     private handleAddGreen(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.addNGreenAtOn(cellLocation, n)
         })
     }
 
     private handleAddBlack(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.addNBlackAtOn(cellLocation, n)
         })
@@ -298,12 +283,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     }
 
     private handleAddRed(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.addNRedAtOn(cellLocation, n)
         })
@@ -356,36 +336,21 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     }
 
     private handleRemoveBlue(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.removeNBlueAt(cellLocation, n)
         })
     }
 
     private handleRemoveBlack(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.removeNBlackAt(cellLocation, n)
         })
     }
 
     private handleRemoveGreen(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.removeNGreenAt(cellLocation, n)
         })
@@ -393,12 +358,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     }
 
     private handleRemoveRed(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
-        let n: number;
-        if (e.shiftKey) {
-            n = 10;
-        } else {
-            n = 1;
-        }
+        let n: number = e.shiftKey ? 10 : 1;
         this.setState({
             cells: this.state.cells.removeNRedAt(cellLocation, n)
         })
