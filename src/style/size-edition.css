@@ -10,6 +10,8 @@
     border-radius: 4px;
     height: 25px;
     width: 30%;
+    text-align: right;
+    border: none;
 }
 
 .modal_label {
@@ -23,7 +25,11 @@
     margin-bottom: 3%;
 }
 
-.random_button{
+.modal_section--right {
+    float: right;
+}
+
+.random_button {
     width: 25px;
     height: 22px;
     margin-left: 5px;
@@ -73,9 +79,11 @@
     margin: 0 3%;
     display: flex;
 }
-.modal_button{
+.modal_button {
     height: 30px;
     background-color: #b7b7b7;
     border-radius: 4px;
-    margin: 0 5px
+    margin: 0 5px;
+    border: none;
+    box-shadow: 1px 1px 1px;
 }
