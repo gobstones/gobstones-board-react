@@ -19,6 +19,11 @@
   outline-style: solid ;
 }
 
+.cell__text {
+  position: absolute;
+  margin: 40% 35%;
+}
+
 div.gbs_gc {
   background-image: var(--background-url);
   background-repeat: no-repeat;
@@ -44,6 +49,7 @@ table.gbs_gc {
   width: 15px;
   height: 15px;
   text-align: center;
+  vertical-align: middle;
   color: #F3F3E9;
 }
 

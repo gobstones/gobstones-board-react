@@ -4,6 +4,7 @@ import "./style/board.css"
 import "./style/cell.css"
 import "./style/stone.css"
 import {CellInfo} from "@gobstones/gobstones-gbb-parser";
+import { attireTest } from "./utils/attireTest"
 import {BoardComponent} from './components/BoardComponent';
 
 const App: React.FC = () => {
@@ -15,7 +16,7 @@ const App: React.FC = () => {
         }
     }
     return (
-        <BoardComponent editable={true} columnsQuantity={5} rowsQuantity={7} header={[2, 0]} boardInfo={boardInfo}/>
+        <BoardComponent editable={true} attire={attireTest} columnsQuantity={5} rowsQuantity={7} header={[2, 0]} boardInfo={boardInfo}/>
     );
 };
 
