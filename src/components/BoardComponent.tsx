@@ -242,21 +242,13 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                                   attire={this.getAttireFor(coordX,coordY)}
                                        content={this.state.cells.getCell(cellLocation)}
                                   addBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlue(cellLocation, e)}
-                                  removeBlue={() => this.setState({
-                                      cells: this.state.cells.removeBlueAtOn(cellLocation)
-                                  })}
+                                  removeBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlue(cellLocation, e)}
                                   addBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlack(cellLocation, e)}
-                                  removeBlack={() => this.setState({
-                                      cells: this.state.cells.removeBlackAtOn(cellLocation)
-                                  })}
+                                  removeBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlack(cellLocation, e)}
                                   addGreen={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddGreen(cellLocation, e)}
-                                  removeGreen={() => this.setState({
-                                      cells: this.state.cells.removeGreenAtOn(cellLocation)
-                                  })}
+                                  removeGreen={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveGreen(cellLocation, e)}
                                   addRed={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddRed(cellLocation, e)}
-                                  removeRed={() => this.setState({
-                                      cells: this.state.cells.removeRedAtOn(cellLocation)
-                                  })}
+                                  removeRed={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveRed(cellLocation, e)}
                 />
 
                 </td>)
@@ -363,4 +355,52 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         });
     }
 
+    private handleRemoveBlue(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.removeNBlueAt(cellLocation, n)
+        })
+    }
+
+    private handleRemoveBlack(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.removeNBlackAt(cellLocation, n)
+        })
+    }
+
+    private handleRemoveGreen(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.removeNGreenAt(cellLocation, n)
+        })
+
+    }
+
+    private handleRemoveRed(cellLocation: CellLocation, e: React.MouseEvent<HTMLDivElement>) {
+        let n: number;
+        if (e.shiftKey) {
+            n = 10;
+        } else {
+            n = 1;
+        }
+        this.setState({
+            cells: this.state.cells.removeNRedAt(cellLocation, n)
+        })
+    }
 }

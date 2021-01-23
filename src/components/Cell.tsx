@@ -15,13 +15,13 @@ type CellProps = {
     isHeader: boolean;
     content: CellInfo;
     addBlue: (event: React.MouseEvent<HTMLDivElement>) => void;
-    removeBlue: () => void;
+    removeBlue: (event: React.MouseEvent<HTMLDivElement>) => void;
     addBlack: (event: React.MouseEvent<HTMLDivElement>) => void;
-    removeBlack: () => void;
+    removeBlack: (event: React.MouseEvent<HTMLDivElement>) => void;
     addRed: (event: React.MouseEvent<HTMLDivElement>) => void;
-    removeRed: () => void;
+    removeRed: (event: React.MouseEvent<HTMLDivElement>) => void;
     addGreen: (event: React.MouseEvent<HTMLDivElement>) => void;
-    removeGreen: () => void;
+    removeGreen: (event: React.MouseEvent<HTMLDivElement>) => void;
     attire:AttireContent;
 }
 

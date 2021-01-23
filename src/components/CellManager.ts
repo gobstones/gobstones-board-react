@@ -1,5 +1,4 @@
-import {CellLocation} from "./BoardComponent";
-import {CellInfo} from "@gobstones/gobstones-gbb-parser";
+import {CellInfo, CellLocation} from "@gobstones/gobstones-gbb-parser";
 
 export class CellManager {
     cells: CellInfo[][];
@@ -86,19 +85,19 @@ export class CellManager {
     }
 
 
-    removeBlueAtOn([x, y]: CellLocation): CellManager {
+    removeNBlueAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    removeBlackAtOn([x, y]: CellLocation): CellManager {
+    removeNBlackAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    removeRedAtOn([x, y]: CellLocation): CellManager {
+    removeNRedAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    removeGreenAtOn([x, y]: CellLocation): CellManager {
+    removeNGreenAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
