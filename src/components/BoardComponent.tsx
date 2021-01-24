@@ -127,6 +127,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                     </div>
                 </div>
                 <input type='file' onChange={(e) => this.handleFileChange(e)}/>
+                <button onClick={(e) => this.handleExportGBB(e)}>Exportar Tablero</button>
             </div>
         );
     }
@@ -362,5 +363,22 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         this.setState({
             cells: this.state.cells.removeNRedAt(cellLocation, n)
         })
+    }
+    
+    private handleExportGBB(e: React.MouseEvent<HTMLButtonElement>) {
+        const board = {
+            format: 'GBB/1.0',
+            width: this.state.cells.getColumnsQuantity(),
+            height: this.state.cells.getRowsQuantity(),
+            head: this.state.header,
+            board: this.state.cells.cells
+        };
+        let blob = new Blob([GBB.stringify(board)], {type: 'text;charset=utf-8;'});
+        let downloadLink = document.createElement('a');
+        let url = URL.createObjectURL(blob);
+        downloadLink.setAttribute("href", url);
+        downloadLink.setAttribute("download", 'tablero.gbb');
+        downloadLink.click();
+        console.log(GBB.stringify(board))
     }
 }
