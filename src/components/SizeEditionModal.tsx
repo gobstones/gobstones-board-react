@@ -70,7 +70,7 @@ export const SizeEditionModal = ({
                     <NumericInput label='At rows: ' value={headY} onChange={setHeadY}/>
                 </div>
             </div>
-            <div className='modal_section'>
+            <div className='modal_section modal_section--right'>
                 <div className='modal_section'>
                     <button className='modal_button' onClick={() => {
                         columnQuantitySetter(5);
