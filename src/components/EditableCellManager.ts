@@ -3,51 +3,47 @@ import {CellManager} from "./CellManager";
 
 export default class EditableCellManager extends CellManager {
 
-    removeBlueAtOn([x, y]: CellLocation) {
-        if (this.cells[x][y].a > 0) {
-            this.cells[x][y].a--;
-        }
+    removeNBlueAt([x, y]: CellLocation, n: number) {
+        let m: number = this.cells[x][y].a > n ? n : this.cells[x][y].a;
+        this.cells[x][y].a = this.cells[x][y].a - m;
         return this;
     }
 
-    removeBlackAtOn([x, y]: CellLocation) {
-        if (this.cells[x][y].n > 0) {
-            this.cells[x][y].n--;
-        }
+    removeNBlackAt([x, y]: CellLocation, n: number) {
+        let m: number = this.cells[x][y].n > n ? n : this.cells[x][y].n;
+        this.cells[x][y].n = this.cells[x][y].n - m;
         return this;
     }
 
-    removeRedAtOn([x, y]: CellLocation) {
-        if (this.cells[x][y].r > 0) {
-            this.cells[x][y].r--;
-        }
+    removeNRedAt([x, y]: CellLocation, n: number) {
+        let m: number = this.cells[x][y].r > n ? n : this.cells[x][y].r;
+        this.cells[x][y].r = this.cells[x][y].r - m;
         return this;
     }
 
-    removeGreenAtOn([x, y]: CellLocation) {
-        if (this.cells[x][y].v > 0) {
-            this.cells[x][y].v--;
-        }
+    removeNGreenAt([x, y]: CellLocation, n: number) {
+        let m: number = this.cells[x][y].v > n ? n : this.cells[x][y].v;
+        this.cells[x][y].v = this.cells[x][y].v - m;
         return this;
     }
 
-    addBlackAtOn([x, y]: CellLocation) {
-        this.cells[x][y].n++;
+    addNBlueAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].a = this.cells[x][y].a + n;
         return this;
     }
 
-    addBlueAtOn([x, y]: CellLocation) {
-        this.cells[x][y].a++;
+    addNBlackAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].n = this.cells[x][y].n + n;
         return this;
     }
 
-    addRedAtOn([x, y]: CellLocation) {
-        this.cells[x][y].r++;
+    addNGreenAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].v = this.cells[x][y].v + n;
         return this;
     }
 
-    addGreenAtOn([x, y]: CellLocation) {
-        this.cells[x][y].v++;
+    addNRedAtOn([x, y]: CellLocation, n: number): CellManager {
+        this.cells[x][y].r = this.cells[x][y].r + n;
         return this;
     }
 }

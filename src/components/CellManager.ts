@@ -1,5 +1,4 @@
-import {CellLocation} from "./BoardComponent";
-import {CellInfo} from "@gobstones/gobstones-gbb-parser";
+import {CellInfo, CellLocation} from "@gobstones/gobstones-gbb-parser";
 
 export class CellManager {
     cells: CellInfo[][];
@@ -86,38 +85,37 @@ export class CellManager {
     }
 
 
-    removeBlueAtOn([x, y]: CellLocation): CellManager {
+    removeNBlueAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    removeBlackAtOn([x, y]: CellLocation): CellManager {
+    removeNBlackAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    removeRedAtOn([x, y]: CellLocation): CellManager {
+    removeNRedAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    removeGreenAtOn([x, y]: CellLocation): CellManager {
+    removeNGreenAt([x, y]: CellLocation, n: number): CellManager {
         throw  new Error("Abstract Method. Subclass responsibility");
     };
 
-    addBlackAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
+    addNBlueAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
-    addBlueAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
+    addNBlackAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
-    addRedAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
+    addNGreenAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
-    addGreenAtOn([x, y]: CellLocation): CellManager {
-        throw  new Error("Abstract Method. Subclass responsibility");
-    };
-
+    addNRedAtOn([x, y]: CellLocation, n: Number): CellManager {
+        throw new Error("Abstract Method. Subclass responsibility");
+    }
 
     initializeMatrix(columnsQuantity: number, rowsQuantity: number): CellInfo[][] {
         let cells: CellInfo[][] = new Array(columnsQuantity)

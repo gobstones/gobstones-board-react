@@ -3,8 +3,8 @@ import React from 'react';
 type StoneProps = {
     color: string;
     amount: number | string;
-    rightClick: () => any;
-    leftClick: () => any;
+    rightClick: (event: React.MouseEvent<HTMLDivElement>) => any;
+    leftClick: (event: React.MouseEvent<HTMLDivElement>) => any;
 }
 
 function Stone({color, leftClick, amount, rightClick}: StoneProps) {
@@ -33,8 +33,11 @@ function Stone({color, leftClick, amount, rightClick}: StoneProps) {
     }
 
     return (
-        <div onClick={leftClick}
-             onContextMenu={(e) => {e.preventDefault();rightClick()}}
+        <div onClick={(e) => leftClick(e)}
+             onContextMenu={(e) => {
+                 e.preventDefault();
+                 rightClick(e)
+             }}
              className={`gbs_color-${color} gbs_stone gbs_tooltip gbs_${color} ${cssClass()}`}>
             <span className="gbs_stone_amount">{amountText()}</span>
         </div>

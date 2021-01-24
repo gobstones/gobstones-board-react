@@ -14,14 +14,14 @@ export type AttireContent = {
 type CellProps = {
     isHeader: boolean;
     content: CellInfo;
-    addBlue: () => void;
-    removeBlue: () => void;
-    addBlack: () => void;
-    removeBlack: () => void;
-    addRed: () => void;
-    removeRed: () => void;
-    addGreen: () => void;
-    removeGreen: () => void;
+    addBlue: (event: React.MouseEvent<HTMLDivElement>) => void;
+    removeBlue: (event: React.MouseEvent<HTMLDivElement>) => void;
+    addBlack: (event: React.MouseEvent<HTMLDivElement>) => void;
+    removeBlack: (event: React.MouseEvent<HTMLDivElement>) => void;
+    addRed: (event: React.MouseEvent<HTMLDivElement>) => void;
+    removeRed: (event: React.MouseEvent<HTMLDivElement>) => void;
+    addGreen: (event: React.MouseEvent<HTMLDivElement>) => void;
+    removeGreen: (event: React.MouseEvent<HTMLDivElement>) => void;
     attire:AttireContent;
 }
 
