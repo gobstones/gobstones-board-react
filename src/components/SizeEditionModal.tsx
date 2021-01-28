@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import '../style/size-edition.css'
 import dice from '../img/dice.svg'
 import {randomInt} from "../utils/random";
@@ -11,6 +11,8 @@ interface Props {
     columnQuantitySetter: (quantity: number) => void;
     initialHead: CellLocation;
     headSetter: (coord: CellLocation) => void;
+    exportGBB: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    handleBoardLoaded: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function NumericInput(props: { label: string, value: number, onChange: (e: number) => void }) {
@@ -33,7 +35,9 @@ export const SizeEditionModal = ({
                                      headSetter,
                                      initialColumns,
                                      initialRows,
-                                     initialHead
+                                     initialHead,
+                                     exportGBB,
+                                     handleBoardLoaded
                                  }: Props) => {
     const [show, setShow] = useState(false)
     const [x, setX]: [number, (x: number) => void] = useState(initialColumns);
@@ -52,11 +56,12 @@ export const SizeEditionModal = ({
         document.addEventListener('keydown', listenOpenShortcut);
         return (() => document.removeEventListener('keydown', listenOpenShortcut));
     }, []);
+    let fileInputRef = useRef<HTMLInputElement>(null);
     return (
         <div className={`modal ${show && 'active'}`}>
             <div className='modal_section'>
                 <label className='section_title'>Board size</label>
-                <div className='modal_section_break'></div>
+                <div className='modal_section_break'/>
                 <div className='modal_section_content'>
                     <NumericInput label='Columns: ' value={x} onChange={setX}/>
                     <NumericInput label='Rows: ' value={y} onChange={setY}/>
@@ -64,27 +69,39 @@ export const SizeEditionModal = ({
             </div>
             <div className='modal_section'>
                 <label className='section_title'>Head position</label>
-                <div className='modal_section_break'></div>
+                <div className='modal_section_break'/>
                 <div className='modal_section_content'>
                     <NumericInput label='At column: ' value={headX} onChange={setHeadX}/>
                     <NumericInput label='At rows: ' value={headY} onChange={setHeadY}/>
                 </div>
             </div>
-            <div className='modal_section modal_section--right'>
-                <div className='modal_section'>
+            <div className='modal_section modal_section--center'>
+                <div className='modal_section modal_section--column'>
+                    <button className='modal_button' onClick={exportGBB}>Save Board</button>
+                    <input style={{display: 'none'}} ref={fileInputRef} type='file'
+                           onChange={(e) => handleBoardLoaded(e)}/>
+                    <button className='modal_button'
+                            onClick={() => fileInputRef.current ? fileInputRef.current.click() : undefined}>Open Board
+                    </button>
+                </div>
+                <div className='modal_section modal_section--column'>
                     <button className='modal_button' onClick={() => {
-                        columnQuantitySetter(5);
-                        rowQuantitySetter(5);
+                        columnQuantitySetter(4);
+                        rowQuantitySetter(4);
                         headSetter([0, 0])
                     }}>New Board
                     </button>
+                    <button className='modal_button'>Random Board</button>
                 </div>
+
+            </div>
+            <div className='modal_section modal_section--right'>
                 <button className='modal_button' onClick={() => {
                     columnQuantitySetter(x);
                     rowQuantitySetter(y);
                     headSetter([headX, headY])
                     setShow(false)
-                }}>OK
+                }}>Done
                 </button>
             </div>
         </div>

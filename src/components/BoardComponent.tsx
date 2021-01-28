@@ -11,8 +11,8 @@ import Attire, {AttireJSON} from "./Attire";
 type BoardState = {
     header: CellLocation;
     cells: CellManager;
-    attire : Attire;
-    theme : AbstractTheme;
+    attire: Attire;
+    theme: AbstractTheme;
 }
 
 export type CellLocation = [number, number];
@@ -23,37 +23,37 @@ type BoardProps = {
     header: CellLocation,
     editable: boolean,
     boardInfo?: CellInfo[][],
-    attire:AttireJSON,
-    theme : ThemeStringType
+    attire: AttireJSON,
+    theme: ThemeStringType
 }
 
 type BorderProps = {
     index?: number;
-    attire?:string;
+    attire?: string;
 }
 
-function TopLeftCorner(props : BorderProps) {
-    return <td style={{backgroundImage : `url(${props.attire})`}} className={"gbs_lx gbs_top_left "}/>;
+function TopLeftCorner(props: BorderProps) {
+    return <td style={{backgroundImage: `url(${props.attire})`}} className={"gbs_lx gbs_top_left "}/>;
 }
 
 function TopRightCorner(props: BorderProps) {
-    return <td style={{backgroundImage : `url(${props.attire})`}} className={"gbs_lx gbs_top_right"}/>;
+    return <td style={{backgroundImage: `url(${props.attire})`}} className={"gbs_lx gbs_top_right"}/>;
 }
 
 function RightBorder(props: BorderProps) {
-    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lv gbs_lvr">{props.index}</td>;
+    return <td style={{backgroundImage: `url(${props.attire})`}} className="gbs_lv gbs_lvr">{props.index}</td>;
 }
 
 function LeftBorder(props: BorderProps) {
-    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lv gbs_lvl">{props.index}</td>;
+    return <td style={{backgroundImage: `url(${props.attire})`}} className="gbs_lv gbs_lvl">{props.index}</td>;
 }
 
 function BottomLeftCorner(props: BorderProps) {
-    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lx gbs_bottom_left"/>
+    return <td style={{backgroundImage: `url(${props.attire})`}} className="gbs_lx gbs_bottom_left"/>
 }
 
 function BottomRightCorner(props: BorderProps) {
-    return <td style={{backgroundImage : `url(${props.attire})`}} className="gbs_lx gbs_bottom_right"/>
+    return <td style={{backgroundImage: `url(${props.attire})`}} className="gbs_lx gbs_bottom_right"/>
 }
 
 const arrowImgSrc = "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-right-01-512.png";
@@ -65,8 +65,8 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             header: props.header,
             cells: props.editable ? new EditableCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo)
                 : new StaticCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo),
-                attire : new Attire(this.props.attire),
-                theme : new Theme().getThemeFor(this.props.theme)
+            attire: new Attire(this.props.attire),
+            theme: new Theme().getThemeFor(this.props.theme)
         };
     }
 
@@ -74,10 +74,10 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     static defaultProps = {
         columnsQuantity: 2,
         rowsQuantity: 2,
-        header: { x:0, y:0 },
+        header: {x: 0, y: 0},
         editable: false,
         attire: new Attire().getAttireJSON(),
-        theme : new ClassicTheme()
+        theme: new ClassicTheme()
     }
 
 
@@ -99,7 +99,9 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                     initialColumns={this.state.cells.getColumnsQuantity()}
                     rowQuantitySetter={(x) => this.handleChangeYSize(x)}
                     columnQuantitySetter={(x) => this.handleChangeXSize(x)}
-                    headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}/>
+                    headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}
+                    exportGBB={(e) => this.handleExportGBB(e)}
+                    handleBoardLoaded={(e) => this.handleFileChange(e)}/>
                 {this.renderSizePanel()}
                 <div className="container">
                     <table className={"gbs_board board"}>
@@ -107,7 +109,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                         <tr className={""}>
                             <TopLeftCorner attire={this.state.attire.getTopLeftCorner()}/>
                             {this.mapColumnsBorder(this.state.attire.getTopBorder())}
-                            <TopRightCorner attire={this.state.attire.getTopRightCorner()} />
+                            <TopRightCorner attire={this.state.attire.getTopRightCorner()}/>
                         </tr>
                         </tbody>
                         {this.mapRaws()}
@@ -115,7 +117,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                         <tr>
                             <BottomLeftCorner attire={this.state.attire.getBottomLeftCorner()}/>
                             {this.mapColumnsBorder(this.state.attire.getBottomBorder())}
-                            <BottomRightCorner attire={this.state.attire.getBottomRightCorner()} />
+                            <BottomRightCorner attire={this.state.attire.getBottomRightCorner()}/>
                         </tr>
                         </tbody>
                     </table>
@@ -126,8 +128,6 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                         {this.renderTopArrows()}
                     </div>
                 </div>
-                <input type='file' onChange={(e) => this.handleFileChange(e)}/>
-                <button onClick={(e) => this.handleExportGBB(e)}>Exportar Tablero</button>
             </div>
         );
     }
@@ -215,10 +215,10 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         }
     }
 
-    private mapColumnsBorder(attire:string) {
+    private mapColumnsBorder(attire: string) {
         // @ts-ignore
         return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(index => <td
-            style={{backgroundImage : `url(${attire})`}}
+            style={{backgroundImage: `url(${attire})`}}
             className={"gbs_lh gbs_lht"} key={index}> {index} </td>);
     }
 
@@ -246,7 +246,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                     }
                 }} key={x}>
                     <Cell isHeader={this.isHeader(x, y)}
-                          attire={this.getAttireFor(x, y)}content={this.state.cells.getCell(cellLocation)}
+                          attire={this.getAttireFor(x, y)} content={this.state.cells.getCell(cellLocation)}
                           addBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlue(cellLocation, e)}
                           removeBlue={(e: React.MouseEvent<HTMLDivElement>) => this.handleRemoveBlue(cellLocation, e)}
                           addBlack={(e: React.MouseEvent<HTMLDivElement>) => this.handleAddBlack(cellLocation, e)}
@@ -281,9 +281,9 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         })
     }
 
-    getAttireFor(x: number, y: number): AttireContent{
-        const cell = this.state.cells.getCell([x,y])
-        const att  = this.state.attire.getAttireFor(cell.n, cell.a, cell.v, cell.r)
+    getAttireFor(x: number, y: number): AttireContent {
+        const cell = this.state.cells.getCell([x, y])
+        const att = this.state.attire.getAttireFor(cell.n, cell.a, cell.v, cell.r)
         return att
     }
 
