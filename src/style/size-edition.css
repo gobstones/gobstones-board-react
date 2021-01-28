@@ -75,8 +75,9 @@
 }
 
 .section_title{
-    margin-bottom:2%;
+    margin-bottom: 2%;
     font-weight: 600;
+    margin-top: 10px;
 }
 
 .section_subtitle{
@@ -88,6 +89,7 @@
     margin: 0 3%;
     display: flex;
 }
+
 .modal_button {
     height: 30px;
     background-color: #b7b7b7;
@@ -96,4 +98,13 @@
     box-shadow: 1px 1px 1px;
     font-size: 17px;
     margin-top: 10px;
+}
+
+.modal_select {
+    height: 40px;
+    width: 100%;
+    border-radius: 4px;
+    background: white;
+    border: none;
+    font-size: 17px;
 }

@@ -3,6 +3,7 @@ import '../style/size-edition.css'
 import dice from '../img/dice.svg'
 import {randomInt} from "../utils/random";
 import {CellLocation} from "./BoardComponent";
+import {ThemeSelect} from "./ThemeSelect";
 
 interface Props {
     initialRows: number;
@@ -13,6 +14,7 @@ interface Props {
     headSetter: (coord: CellLocation) => void;
     exportGBB: (e: React.MouseEvent<HTMLButtonElement>) => void;
     handleBoardLoaded: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleThemeChange: (theme: string) => void;
 }
 
 function NumericInput(props: { label: string, value: number, onChange: (e: number) => void }) {
@@ -37,7 +39,8 @@ export const SizeEditionModal = ({
                                      initialRows,
                                      initialHead,
                                      exportGBB,
-                                     handleBoardLoaded
+                                     handleBoardLoaded,
+                                     handleThemeChange
                                  }: Props) => {
     const [show, setShow] = useState(false)
     const [x, setX]: [number, (x: number) => void] = useState(initialColumns);
@@ -75,6 +78,7 @@ export const SizeEditionModal = ({
                     <NumericInput label='At rows: ' value={headY} onChange={setHeadY}/>
                 </div>
             </div>
+            <ThemeSelect onChange={event => handleThemeChange(event.target.value)}/>
             <div className='modal_section modal_section--center'>
                 <div className='modal_section modal_section--column'>
                     <button className='modal_button' onClick={exportGBB}>Save Board</button>
@@ -93,7 +97,6 @@ export const SizeEditionModal = ({
                     </button>
                     <button className='modal_button'>Random Board</button>
                 </div>
-
             </div>
             <div className='modal_section modal_section--right'>
                 <button className='modal_button' onClick={() => {

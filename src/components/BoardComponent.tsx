@@ -101,7 +101,8 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                     columnQuantitySetter={(x) => this.handleChangeXSize(x)}
                     headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}
                     exportGBB={(e) => this.handleExportGBB(e)}
-                    handleBoardLoaded={(e) => this.handleFileChange(e)}/>
+                    handleBoardLoaded={(e) => this.handleFileChange(e)}
+                    handleThemeChange={(theme => this.handleThemeChange(theme))}/>
                 {this.renderSizePanel()}
                 <div className="container">
                     <table className={"gbs_board board"}>
@@ -384,5 +385,9 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         downloadLink.setAttribute("download", 'tablero.gbb');
         downloadLink.click();
         console.log(GBB.stringify(board))
+    }
+
+    private handleThemeChange(theme: string) {
+        this.setState({theme: new Theme().getThemeFor(theme)})
     }
 }
