@@ -78,7 +78,6 @@ export const SizeEditionModal = ({
                     <NumericInput label='At rows: ' value={headY} onChange={setHeadY}/>
                 </div>
             </div>
-            <ThemeSelect onChange={event => handleThemeChange(event.target.value)}/>
             <div className='modal_section modal_section--center'>
                 <div className='modal_section modal_section--column'>
                     <button className='modal_button' onClick={exportGBB}>Save Board</button>
@@ -98,7 +97,9 @@ export const SizeEditionModal = ({
                     <button className='modal_button'>Random Board</button>
                 </div>
             </div>
+            <ThemeSelect onChange={event => handleThemeChange(event.target.value)}/>
             <div className='modal_section modal_section--right'>
+                <label onClick={() => setShow(false)} className='modal_close'> Close </label>
                 <button className='modal_button' onClick={() => {
                     columnQuantitySetter(x);
                     rowQuantitySetter(y);

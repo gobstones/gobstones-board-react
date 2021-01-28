@@ -36,6 +36,7 @@
 
 .modal_section--right {
     float: right;
+    align-items: baseline;
 }
 
 .random_button {
@@ -107,4 +108,10 @@
     background: white;
     border: none;
     font-size: 17px;
+}
+
+.modal_close {
+    text-decoration: underline;
+    color: dimgrey;
+    margin-right: 10px;
 }
