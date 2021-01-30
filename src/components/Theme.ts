@@ -59,6 +59,11 @@ export abstract class AbstractTheme {
         document.documentElement.style.setProperty("--border-color",borderBackground)
         document.documentElement.style.setProperty("--border-number-color",borderNumbersColor)
     }
+
+    setDefaultHeader(){
+        document.documentElement.style.setProperty("--header-background-color","rgba(221, 221, 136, 0.7)")
+        document.documentElement.style.setProperty("--header-outline-color","#0A9500")
+    }
 }
 
 export class ClassicTheme extends AbstractTheme {
@@ -69,6 +74,9 @@ export class ClassicTheme extends AbstractTheme {
 
     changeCSSVariables(){
         this.setStonesColorTo("classic")
+        this.setAmountColorTo("#FFF")
+        this.setCellBackgroundColor("#FFF")
+        this.setDefaultHeader()
     }
 }
 
@@ -80,7 +88,9 @@ export class DeuteranopeTheme extends AbstractTheme {
     
     changeCSSVariables(){
         this.setStonesColorTo("deuteranope")
-        this.setHeaderToDaltonism()        
+        this.setAmountColorTo("#FFF")
+        this.setHeaderToDaltonism()
+        this.setCellBackgroundColor("#FFF")        
     }
 }
 
@@ -92,6 +102,9 @@ export class FlatTheme extends AbstractTheme {
     
     changeCSSVariables(){
         this.setStonesColorTo("flat")
+        this.setAmountColorTo("#FFF")
+        this.setCellBackgroundColor("#FFF")
+        this.setDefaultHeader()
     }
 }
 
@@ -105,7 +118,7 @@ export class HighContrastTheme extends AbstractTheme {
         this.setStonesColorTo("high-contrast")
         this.setCellBackgroundColor("black")
         this.setHeaderColors("rgba( 234, 229, 194 ,.3)","#f3ebb8")
-        this.setBorderColors("#34495e","white")
+        this.setBorderColors("#34495e","#FFF")
         this.setAmountColorTo("black")
     }
 }
@@ -119,6 +132,8 @@ export class LinesTheme extends AbstractTheme {
     changeCSSVariables(){
         this.setStonesColorTo("lines")
         this.setAmountColorTo("black")
+        this.setCellBackgroundColor("#FFF")
+        this.setDefaultHeader()
     }
 }
 
@@ -130,6 +145,9 @@ export class ModernTheme extends AbstractTheme {
     
     changeCSSVariables(){
         this.setStonesColorTo("modern")
+        this.setAmountColorTo("#FFF")
+        this.setCellBackgroundColor("#FFF")
+        this.setDefaultHeader()
     }
 }
 
@@ -142,6 +160,8 @@ export class ProtanopeTheme extends AbstractTheme {
     changeCSSVariables(){
         this.setStonesColorTo("protanope")       
         this.setHeaderToDaltonism()
+        this.setAmountColorTo("#FFF")
+        this.setCellBackgroundColor("#FFF")
     }
 }
 
@@ -153,6 +173,9 @@ export class ShapesTheme extends AbstractTheme {
     
     changeCSSVariables(){
         this.setStonesColorTo("shapes") 
+        this.setAmountColorTo("#FFF")
+        this.setCellBackgroundColor("#FFF")
+        this.setDefaultHeader()
     }
 }
 
@@ -166,6 +189,8 @@ export class TritanopeTheme extends AbstractTheme {
     changeCSSVariables(){
         this.setStonesColorTo("tritanope")
         this.setHeaderToDaltonism()
+        this.setAmountColorTo("#FFF")
+        this.setCellBackgroundColor("#FFF")
     }
 }
 
