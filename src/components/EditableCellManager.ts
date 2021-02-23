@@ -1,7 +1,7 @@
 import {CellLocation} from "./BoardComponent";
-import {CellManager} from "./CellManager";
+import {Board} from "./Board";
 
-export default class EditableCellManager extends CellManager {
+export default class EditableCellManager extends Board {
 
     removeNBlueAt([x, y]: CellLocation, n: number) {
         let m: number = this.cells[x][y].a > n ? n : this.cells[x][y].a;
@@ -27,22 +27,22 @@ export default class EditableCellManager extends CellManager {
         return this;
     }
 
-    addNBlueAtOn([x, y]: CellLocation, n: number): CellManager {
+    addNBlueAtOn([x, y]: CellLocation, n: number): Board {
         this.cells[x][y].a = this.cells[x][y].a + n;
         return this;
     }
 
-    addNBlackAtOn([x, y]: CellLocation, n: number): CellManager {
+    addNBlackAtOn([x, y]: CellLocation, n: number): Board {
         this.cells[x][y].n = this.cells[x][y].n + n;
         return this;
     }
 
-    addNGreenAtOn([x, y]: CellLocation, n: number): CellManager {
+    addNGreenAtOn([x, y]: CellLocation, n: number): Board {
         this.cells[x][y].v = this.cells[x][y].v + n;
         return this;
     }
 
-    addNRedAtOn([x, y]: CellLocation, n: number): CellManager {
+    addNRedAtOn([x, y]: CellLocation, n: number): Board {
         this.cells[x][y].r = this.cells[x][y].r + n;
         return this;
     }

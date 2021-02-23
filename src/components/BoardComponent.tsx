@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import Cell, {AttireContent} from "./Cell";
 import EditableCellManager from "./EditableCellManager";
 import {StaticCellManager} from "./StaticCellManager";
-import {CellManager} from "./CellManager";
+import {Board} from "./Board";
 import {SizeEditionModal} from "./SizeEditionModal";
 import Theme, {AbstractTheme, ClassicTheme, ThemeStringType} from "./Theme";
 import {CellInfo, GBB} from "@gobstones/gobstones-gbb-parser";
@@ -10,7 +10,7 @@ import Attire, {AttireJSON} from "./Attire";
 
 type BoardState = {
     header: CellLocation;
-    cells: CellManager;
+    cells: Board;
     attire: Attire;
     theme: AbstractTheme;
 }
