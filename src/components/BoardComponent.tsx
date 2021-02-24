@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
 import Cell, {AttireContent} from "./Cell";
-import EditableCellManager from "./EditableCellManager";
-import {StaticCellManager} from "./StaticCellManager";
+import EditableBoard from "./EditableBoard";
+import {StaticBoard} from "./StaticBoard";
 import {Board} from "./Board";
 import {SizeEditionModal} from "./SizeEditionModal";
 import Theme, {AbstractTheme, ClassicTheme, ThemeStringType} from "./Theme";
@@ -63,8 +63,8 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         super(props);
         this.state = {
             header: props.header,
-            cells: props.editable ? new EditableCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo)
-                : new StaticCellManager(props.columnsQuantity, props.rowsQuantity, props.boardInfo),
+            cells: props.editable ? new EditableBoard(props.columnsQuantity, props.rowsQuantity, props.boardInfo)
+                : new StaticBoard(props.columnsQuantity, props.rowsQuantity, props.boardInfo),
             attire: new Attire(this.props.attire),
             theme: new Theme().getThemeFor(this.props.theme)
         };
@@ -337,7 +337,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     private parseBoardFile(file: File) {
         //@ts-ignore
         file.text().then(text => GBB.parse(text)).then(board => {
-            this.setState({header: board.head, cells: new EditableCellManager(board.width, board.height, board.board)})
+            this.setState({header: board.head, cells: new EditableBoard(board.width, board.height, board.board)})
         });
     }
 

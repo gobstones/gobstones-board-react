@@ -4,7 +4,7 @@ export class Board {
     cells: CellInfo[][];
 
     constructor(columnsQuantity: number, rowsQuantity: number, boardInfo: CellInfo[][] | undefined) {
-        this.cells = boardInfo ? boardInfo : this.initializeMatrix(columnsQuantity, rowsQuantity);
+        this.cells = boardInfo ? boardInfo : Board.initializeMatrix(columnsQuantity, rowsQuantity);
     }
 
     getCell([x, y]: CellLocation): CellInfo {
@@ -117,7 +117,7 @@ export class Board {
         throw new Error("Abstract Method. Subclass responsibility");
     }
 
-    initializeMatrix(columnsQuantity: number, rowsQuantity: number): CellInfo[][] {
+    static initializeMatrix(columnsQuantity: number, rowsQuantity: number): CellInfo[][] {
         let cells: CellInfo[][] = new Array(columnsQuantity)
         for (let i = 0; i < columnsQuantity; i++) {
             cells[i] = new Array(rowsQuantity);
@@ -127,4 +127,8 @@ export class Board {
         }
         return cells;
     };
+
+    getCellInfo(): CellInfo[][] {
+        return this.cells;
+    }
 }

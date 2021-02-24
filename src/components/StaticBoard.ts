@@ -2,40 +2,40 @@ import {Board} from "./Board";
 import {CellLocation} from "./BoardComponent";
 import {CellInfo} from "@gobstones/gobstones-gbb-parser";
 
-export class StaticCellManager extends Board {
+export class StaticBoard extends Board {
     constructor(columnsQuantity: number, rowsQuantity: number, boardInfo: CellInfo[][] | undefined) {
         super(columnsQuantity, rowsQuantity, boardInfo);
     }
 
-    addBlackAtOn([x, y]: CellLocation): Board {
+    addNBlackAtOn([x, y]: CellLocation, n: number): Board {
         return this;
     }
 
-    addBlueAtOn([x, y]: CellLocation): Board {
+    addNBlueAtOn([x, y]: CellLocation, n: number): Board {
         return this;
     }
 
-    addGreenAtOn([x, y]: CellLocation): Board {
+    addNGreenAtOn([x, y]: CellLocation, n: number): Board {
         return this;
     }
 
-    addRedAtOn([x, y]: CellLocation): Board {
+    addNRedAtOn([x, y]: CellLocation): Board {
         return this;
     }
 
-    removeBlackAtOn([x, y]: CellLocation): Board {
+    removeNBlackAt([x, y]: CellLocation, n: number): Board {
         return this;
     }
 
-    removeBlueAtOn([x, y]: CellLocation): Board {
+    removeNBlueAt([x, y]: CellLocation, n: number): Board {
         return this;
     }
 
-    removeGreenAtOn([x, y]: CellLocation): Board {
+    removeNGreenAt([x, y]: CellLocation): Board {
         return this;
     }
 
-    removeRedAtOn([x, y]: CellLocation): Board {
+    removeNRedAt([x, y]: CellLocation): Board {
         return this;
     }
 

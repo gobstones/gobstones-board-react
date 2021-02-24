@@ -1,7 +1,7 @@
 import {CellLocation} from "./BoardComponent";
 import {Board} from "./Board";
 
-export default class EditableCellManager extends Board {
+export default class EditableBoard extends Board {
 
     removeNBlueAt([x, y]: CellLocation, n: number) {
         let m: number = this.cells[x][y].a > n ? n : this.cells[x][y].a;
