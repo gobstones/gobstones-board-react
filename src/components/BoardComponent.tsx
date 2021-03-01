@@ -103,7 +103,6 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                     exportGBB={(e) => this.handleExportGBB(e)}
                     handleBoardLoaded={(e) => this.handleFileChange(e)}
                     handleThemeChange={(theme => this.handleThemeChange(theme))}/>
-                {this.renderSizePanel()}
                 <div className="container">
                     <table className={"gbs_board board"}>
                         <tbody className={""}>
@@ -165,24 +164,6 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
 
     resetHeader() {
         this.setState({header: [0, 0]})
-    }
-
-    renderSizePanel() {
-        if (this.props.editable) {
-            return (
-                <div className="panel">
-                    Tamaño:
-                    <input className="input-size" type="number"
-                           onChange={(e: any) => this.handleChangeXSize(e.target.value)}
-                           value={this.state.cells.getColumnsQuantity()}/>
-                    columnas x
-                    <input className="input-size" type="number"
-                           onChange={(e: any) => this.handleChangeYSize(e.target.value)}
-                           value={this.state.cells.getRowsQuantity()}/>
-                    filas
-                </div>
-            );
-        }
     }
 
     renderRightArrows() {
