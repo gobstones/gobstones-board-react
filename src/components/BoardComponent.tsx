@@ -1,12 +1,14 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent,Suspense} from "react";
 import Cell, {AttireContent} from "./Cell";
 import EditableBoard from "./EditableBoard";
 import {StaticBoard} from "./StaticBoard";
 import {Board} from "./Board";
 import {SizeEditionModal} from "./SizeEditionModal";
 import Theme, {AbstractTheme, ClassicTheme, ThemeStringType} from "./Theme";
+import {LanguageStringType, changeLenguage} from "./Language";
 import {CellInfo, GBB} from "@gobstones/gobstones-gbb-parser";
 import Attire, {AttireJSON} from "./Attire";
+
 
 type BoardState = {
     header: CellLocation;
@@ -24,7 +26,8 @@ type BoardProps = {
     editable: boolean,
     boardInfo?: CellInfo[][],
     attire: AttireJSON,
-    theme: ThemeStringType
+    theme: ThemeStringType,
+    language:LanguageStringType
 }
 
 type BorderProps = {
@@ -68,6 +71,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             attire: new Attire(this.props.attire),
             theme: new Theme().getThemeFor(this.props.theme)
         };
+        changeLenguage(props.language)
     }
 
     // Setea props por default
@@ -77,7 +81,8 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         header: {x: 0, y: 0},
         editable: false,
         attire: new Attire().getAttireJSON(),
-        theme: new ClassicTheme()
+        theme: new ClassicTheme(),
+        language:"en"
     }
 
 
@@ -94,40 +99,42 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     render(): React.ReactElement {
         return (
             <div>
-                <SizeEditionModal
-                    initialRows={this.state.cells.getRowsQuantity()}
-                    initialColumns={this.state.cells.getColumnsQuantity()}
-                    rowQuantitySetter={(x) => this.handleChangeYSize(x)}
-                    columnQuantitySetter={(x) => this.handleChangeXSize(x)}
-                    headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}
-                    exportGBB={(e) => this.handleExportGBB(e)}
-                    handleBoardLoaded={(e) => this.handleFileChange(e)}
-                    handleThemeChange={(theme => this.handleThemeChange(theme))}/>
-                <div className="container">
-                    <table className={"gbs_board board"}>
-                        <tbody className={""}>
-                        <tr className={""}>
-                            <TopLeftCorner attire={this.state.attire.getTopLeftCorner()}/>
-                            {this.mapColumnsBorder(this.state.attire.getTopBorder())}
-                            <TopRightCorner attire={this.state.attire.getTopRightCorner()}/>
-                        </tr>
-                        </tbody>
-                        {this.mapRaws()}
-                        <tbody>
-                        <tr>
-                            <BottomLeftCorner attire={this.state.attire.getBottomLeftCorner()}/>
-                            {this.mapColumnsBorder(this.state.attire.getBottomBorder())}
-                            <BottomRightCorner attire={this.state.attire.getBottomRightCorner()}/>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div className="right-arrows">
-                        {this.renderRightArrows()}
+                <Suspense fallback={<div />}>
+                    <SizeEditionModal
+                        initialRows={this.state.cells.getRowsQuantity()}
+                        initialColumns={this.state.cells.getColumnsQuantity()}
+                        rowQuantitySetter={(x) => this.handleChangeYSize(x)}
+                        columnQuantitySetter={(x) => this.handleChangeXSize(x)}
+                        headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}
+                        exportGBB={(e) => this.handleExportGBB(e)}
+                        handleBoardLoaded={(e) => this.handleFileChange(e)}
+                        handleThemeChange={(theme => this.handleThemeChange(theme))}/>
+                    <div className="container">
+                        <table className={"gbs_board board"}>
+                            <tbody className={""}>
+                            <tr className={""}>
+                                <TopLeftCorner attire={this.state.attire.getTopLeftCorner()}/>
+                                {this.mapColumnsBorder(this.state.attire.getTopBorder())}
+                                <TopRightCorner attire={this.state.attire.getTopRightCorner()}/>
+                            </tr>
+                            </tbody>
+                            {this.mapRaws()}
+                            <tbody>
+                            <tr>
+                                <BottomLeftCorner attire={this.state.attire.getBottomLeftCorner()}/>
+                                {this.mapColumnsBorder(this.state.attire.getBottomBorder())}
+                                <BottomRightCorner attire={this.state.attire.getBottomRightCorner()}/>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div className="right-arrows">
+                            {this.renderRightArrows()}
+                        </div>
+                        <div className="top-arrows">
+                            {this.renderTopArrows()}
+                        </div>
                     </div>
-                    <div className="top-arrows">
-                        {this.renderTopArrows()}
-                    </div>
-                </div>
+                </Suspense>
             </div>
         );
     }
@@ -312,6 +319,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
 
     private handleFileChange(event: ChangeEvent<HTMLInputElement>) {
         // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const header: Coord = this.parseBoardFile(event.target.files[0]);
     }
 

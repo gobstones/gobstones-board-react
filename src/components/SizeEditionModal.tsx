@@ -4,6 +4,8 @@ import dice from '../img/dice.svg'
 import {randomInt} from "../utils/random";
 import {CellLocation} from "./BoardComponent";
 import {ThemeSelect} from "./ThemeSelect";
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
     initialRows: number;
@@ -47,6 +49,8 @@ export const SizeEditionModal = ({
     const [y, setY]: [number, (x: number) => void] = useState(initialRows);
     const [headY, setHeadY]: [number, (x: number) => void] = useState(initialHead[1]);
     const [headX, setHeadX]: [number, (x: number) => void] = useState(initialHead[0]);
+    const [ t ] = useTranslation();
+
 
     const listenOpenShortcut = (e: KeyboardEvent) => {
         if (e.key === 'g' && e.ctrlKey) {
@@ -63,28 +67,28 @@ export const SizeEditionModal = ({
     return (
         <div className={`modal ${show && 'active'}`}>
             <div className='modal_section'>
-                <label className='section_title'>Board size</label>
+                <label className='section_title'>{t("Board size")}</label>
                 <div className='modal_section_break'/>
                 <div className='modal_section_content'>
-                    <NumericInput label='Columns: ' value={x} onChange={setX}/>
-                    <NumericInput label='Rows: ' value={y} onChange={setY}/>
+                    <NumericInput label={t("Columns")} value={x} onChange={setX}/>
+                    <NumericInput label={t('Rows')} value={y} onChange={setY}/>
                 </div>
             </div>
             <div className='modal_section'>
-                <label className='section_title'>Head position</label>
+                <label className='section_title'>{t("Head position")}</label>
                 <div className='modal_section_break'/>
                 <div className='modal_section_content'>
-                    <NumericInput label='At column: ' value={headX} onChange={setHeadX}/>
-                    <NumericInput label='At rows: ' value={headY} onChange={setHeadY}/>
+                    <NumericInput label={t('At column')} value={headX} onChange={setHeadX}/>
+                    <NumericInput label={t('At row')} value={headY} onChange={setHeadY}/>
                 </div>
             </div>
             <div className='modal_section modal_section--center'>
                 <div className='modal_section modal_section--column'>
-                    <button className='modal_button' onClick={exportGBB}>Save Board</button>
+                    <button className='modal_button' onClick={exportGBB}>{t("Save")}</button>
                     <input style={{display: 'none'}} ref={fileInputRef} type='file'
                            onChange={(e) => handleBoardLoaded(e)}/>
                     <button className='modal_button'
-                            onClick={() => fileInputRef.current ? fileInputRef.current.click() : undefined}>Open Board
+                            onClick={() => fileInputRef.current ? fileInputRef.current.click() : undefined}>{t("Open")}
                     </button>
                 </div>
                 <div className='modal_section modal_section--column'>
@@ -92,20 +96,20 @@ export const SizeEditionModal = ({
                         columnQuantitySetter(4);
                         rowQuantitySetter(4);
                         headSetter([0, 0])
-                    }}>New Board
+                    }}>{t("New")}
                     </button>
-                    <button className='modal_button'>Random Board</button>
+                    <button className='modal_button'>{t("Random")}</button>
                 </div>
             </div>
             <ThemeSelect onChange={event => handleThemeChange(event.target.value)}/>
             <div className='modal_section modal_section--right'>
-                <label onClick={() => setShow(false)} className='modal_close'> Close </label>
+                <label onClick={() => setShow(false)} className='modal_close'> {t("Close")} </label>
                 <button className='modal_button' onClick={() => {
                     columnQuantitySetter(x);
                     rowQuantitySetter(y);
                     headSetter([headX, headY])
                     setShow(false)
-                }}>Done
+                }}>{t("Done")}
                 </button>
             </div>
         </div>

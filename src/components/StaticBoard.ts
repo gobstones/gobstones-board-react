@@ -3,6 +3,7 @@ import {CellLocation} from "./BoardComponent";
 import {CellInfo} from "@gobstones/gobstones-gbb-parser";
 
 export class StaticBoard extends Board {
+    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
     constructor(columnsQuantity: number, rowsQuantity: number, boardInfo: CellInfo[][] | undefined) {
         super(columnsQuantity, rowsQuantity, boardInfo);
     }

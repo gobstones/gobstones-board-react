@@ -22,6 +22,7 @@ const App: React.FC = () => {
             header={[2, 0]}
             boardInfo={boardInfo}
             theme="modern"
+            language="es"
         />
     );
 };
