@@ -1,4 +1,4 @@
-import i18n from "i18next";
+import i18n from "../i18n.js";
 
 export type LanguageStringType = "en" | "es"
 
