@@ -99,7 +99,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
     render(): React.ReactElement {
         return (
             <div>
-                <Suspense fallback={<div />}>
+                <Suspense fallback={<b>Loading</b>}>
                     <SizeEditionModal
                         initialRows={this.state.cells.getRowsQuantity()}
                         initialColumns={this.state.cells.getColumnsQuantity()}
