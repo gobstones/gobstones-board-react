@@ -189,11 +189,12 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         if (this.props.editable) {
             return (
                 <div>
-                    <button className="right-arrow-button arrow-button"
+                    <button data-testid='increase-column-quantity' className="right-arrow-button arrow-button"
                             onClick={() => this.handleRightArrowClickRight()}>
                         <img alt="arrow" className="arrow-img" src={arrowImgSrc}/>
                     </button>
-                    <button className="arrow-button" onClick={() => this.handleRightArrowClickLeft()}>
+                    <button data-testid='decrease-column-quantity' className="arrow-button"
+                            onClick={() => this.handleRightArrowClickLeft()}>
                         <img alt="arrow" className="arrow-img arrow-img-left" src={arrowImgSrc}/>
                     </button>
                 </div>
@@ -205,10 +206,12 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         if (this.props.editable) {
             return (
                 <div className="wrapper">
-                    <button className="top-arrow-button arrow-button" onClick={() => this.handleTopArrowClickDown()}>
+                    <button data-testid='decrease-row-quantity' className="top-arrow-button arrow-button"
+                            onClick={() => this.handleTopArrowClickDown()}>
                         <img alt="arrow" className="top-arrow-img-down arrow-img" src={arrowImgSrc}/>
                     </button>
-                    <button className="top-arrow-button arrow-button" onClick={() => this.handleTopArrowClickUp()}>
+                    <button data-testid='increase-row-quantity' className="top-arrow-button arrow-button"
+                            onClick={() => this.handleTopArrowClickUp()}>
                         <img alt="arrow" className="top-arrow-img-up arrow-img" src={arrowImgSrc}/>
                     </button>
                 </div>
@@ -227,7 +230,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         // @ts-ignore
         return [...Array(this.state.cells.getRowsQuantity()).keys()].reverse().map(coordY =>
             <tbody key={Math.random()}>
-            <tr>
+            <tr data-testid={`row-${coordY}`}>
                 <LeftBorder attire={this.state.attire.getLeftBorder()} index={coordY}/>
                 {this.mapColumnsContent(coordY)}
                 <RightBorder attire={this.state.attire.getRightBorder()} index={coordY}/>
@@ -240,7 +243,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         return [...Array(this.state.cells.getColumnsQuantity()).keys()].map(x => {
             const cellLocation: CellLocation = [x, y];
             return (
-                <td onClickCapture={(e) => {
+                <td data-testid={`cell-${x}-${y}`} onClickCapture={(e) => {
                     if (e.ctrlKey) {
                         e.stopPropagation();
                         this.setState({header: cellLocation})
@@ -378,13 +381,14 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             head: this.state.header,
             board: this.state.cells.cells
         };
+        //Se crea un objeto que representa el archivo.
         let blob = new Blob([GBB.stringify(board)], {type: 'text;charset=utf-8;'});
-        let downloadLink = document.createElement('a');
         let url = URL.createObjectURL(blob);
+        //Se crea un tag donde se encuentran los datos del archivo a crear
+        let downloadLink = document.createElement('a');
         downloadLink.setAttribute("href", url);
         downloadLink.setAttribute("download", 'tablero.gbb');
         downloadLink.click();
-        console.log(GBB.stringify(board))
     }
 
     private handleThemeChange(theme: string) {
