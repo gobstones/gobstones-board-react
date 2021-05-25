@@ -39,7 +39,7 @@ function Stone({color, leftClick, amount, rightClick}: StoneProps) {
                  rightClick(e)
              }}
              className={`gbs_color-${color} gbs_stone gbs_tooltip gbs_${color} ${cssClass()}`}>
-            <span className="gbs_stone_amount">{amountText()}</span>
+            <span role={`${color}-stone`} className="gbs_stone_amount">{amountText()}</span>
         </div>
     );
 }
