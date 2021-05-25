@@ -1,11 +1,11 @@
-import React, {ChangeEvent,Suspense} from "react";
+import React, {ChangeEvent, Suspense} from "react";
 import Cell, {AttireContent} from "./Cell";
 import EditableBoard from "./EditableBoard";
 import {StaticBoard} from "./StaticBoard";
 import {Board} from "./Board";
 import {SizeEditionModal} from "./SizeEditionModal";
 import Theme, {AbstractTheme, ClassicTheme, ThemeStringType} from "./Theme";
-import {LanguageStringType, changeLenguage} from "./Language";
+import {changeLenguage, LanguageStringType} from "./Language";
 import {CellInfo, GBB} from "@gobstones/gobstones-gbb-parser";
 import Attire, {AttireJSON} from "./Attire";
 
@@ -100,15 +100,6 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
         return (
             <div>
                 <Suspense fallback={<b>Loading</b>}>
-                    <SizeEditionModal
-                        initialRows={this.state.cells.getRowsQuantity()}
-                        initialColumns={this.state.cells.getColumnsQuantity()}
-                        rowQuantitySetter={(x) => this.handleChangeYSize(x)}
-                        columnQuantitySetter={(x) => this.handleChangeXSize(x)}
-                        headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}
-                        exportGBB={(e) => this.handleExportGBB(e)}
-                        handleBoardLoaded={(e) => this.handleFileChange(e)}
-                        handleThemeChange={(theme => this.handleThemeChange(theme))}/>
                     <div className="container">
                         <table className={"gbs_board board"}>
                             <tbody className={""}>
@@ -131,6 +122,15 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                             {this.renderRightArrows()}
                         </div>
                         <div className="top-arrows">
+                            <SizeEditionModal
+                                initialRows={this.state.cells.getRowsQuantity()}
+                                initialColumns={this.state.cells.getColumnsQuantity()}
+                                rowQuantitySetter={(x) => this.handleChangeYSize(x)}
+                                columnQuantitySetter={(x) => this.handleChangeXSize(x)}
+                                headSetter={(coord => this.setState({header: coord}))} initialHead={this.state.header}
+                                exportGBB={(e) => this.handleExportGBB(e)}
+                                handleBoardLoaded={(e) => this.handleFileChange(e)}
+                                handleThemeChange={(theme => this.handleThemeChange(theme))}/>
                             {this.renderTopArrows()}
                         </div>
                     </div>
