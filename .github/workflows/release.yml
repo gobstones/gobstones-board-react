@@ -1,0 +1,49 @@
+name: release-on-tag
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --experimental-modules
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      # Add release to GitHub releases
+      - name: Create Release on GitHub
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false
+      # Setup .npmrc file to publish to npm
+      - name: Publish on NPM
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install
+      # Publish to NPM
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Setup .npmrc file to publish to GitHub Packages
+      - name: Publish on GitHub Packages
+        uses: actions/setup-node@v1
+        with:
+          registry-url: "https://npm.pkg.github.com"
+      # Publish to GitHub Packages
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
