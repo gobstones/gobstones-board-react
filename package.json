@@ -5,6 +5,7 @@
   "repository": "https://github.com/gobstones/gobstones-board-react",
   "author": "Federico Sawady <sawady.faso@gmail.com>",
   "license": "MIT",
+  "main": "dist/index.js",
   "keywords": [
     "Gobstones",
     "Board"

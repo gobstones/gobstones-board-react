@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/aria-role */
 import React from "react";
 
 type StoneProps = {
@@ -42,10 +41,7 @@ function Stone({ color, leftClick, amount, rightClick }: StoneProps) {
       }}
       className={`gbs_color-${color} gbs_stone gbs_tooltip gbs_${color} ${cssClass()}`}
     >
-      // eslint-disable-next-line jsx-a11y/aria-role
-      <span role={`${color}-stone`} className="gbs_stone_amount">
-        {amountText()}
-      </span>
+      <span className="gbs_stone_amount">{amountText()}</span>
     </div>
   );
 }
