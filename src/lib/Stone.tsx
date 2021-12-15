@@ -41,7 +41,12 @@ function Stone({ color, leftClick, amount, rightClick }: StoneProps) {
       }}
       className={`gbs_color-${color} gbs_stone gbs_tooltip gbs_${color} ${cssClass()}`}
     >
-      <span className="gbs_stone_amount">{amountText()}</span>
+      {
+        // eslint-disable-next-line jsx-a11y/aria-role
+        <span role={`${color}-stone`} className="gbs_stone_amount">
+          {amountText()}
+        </span>
+      }
     </div>
   );
 }
