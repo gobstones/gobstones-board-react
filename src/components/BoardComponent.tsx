@@ -3,7 +3,7 @@ import { Cell, AttireContent } from "./Cell";
 import EditableBoard from "./EditableBoard";
 import { StaticBoard } from "./StaticBoard";
 import { Board } from "./Board";
-import { SizeEditionModal } from "./SizeEditionModal";
+// import { SizeEditionModal } from "./SizeEditionModal";
 import { Theme, AbstractTheme, ClassicTheme, ThemeStringType } from "./Theme";
 import { changeLenguage, LanguageStringType } from "./Language";
 import { CellInfo, GBB } from "@gobstones/gobstones-gbb-parser";
@@ -170,7 +170,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
             </table>
             <div className="right-arrows">{this.renderRightArrows()}</div>
             <div className="top-arrows">
-              <SizeEditionModal
+              {/* <SizeEditionModal
                 initialRows={this.state.cells.getRowsQuantity()}
                 initialColumns={this.state.cells.getColumnsQuantity()}
                 rowQuantitySetter={(x) => this.handleChangeYSize(x)}
@@ -180,7 +180,7 @@ export class BoardComponent extends React.Component<BoardProps, BoardState> {
                 exportGBB={(e) => this.handleExportGBB(e)}
                 handleBoardLoaded={(e) => this.handleFileChange(e)}
                 handleThemeChange={(theme) => this.handleThemeChange(theme)}
-              />
+              /> */}
               {this.renderTopArrows()}
             </div>
           </div>
