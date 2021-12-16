@@ -1,13 +1,13 @@
 import React, { ChangeEvent, Suspense } from "react";
-import Cell, { AttireContent } from "./Cell";
+import { Cell, AttireContent } from "./Cell";
 import EditableBoard from "./EditableBoard";
 import { StaticBoard } from "./StaticBoard";
 import { Board } from "./Board";
 import { SizeEditionModal } from "./SizeEditionModal";
-import Theme, { AbstractTheme, ClassicTheme, ThemeStringType } from "./Theme";
+import { Theme, AbstractTheme, ClassicTheme, ThemeStringType } from "./Theme";
 import { changeLenguage, LanguageStringType } from "./Language";
 import { CellInfo, GBB } from "@gobstones/gobstones-gbb-parser";
-import Attire, { AttireJSON } from "./Attire";
+import { Attire, AttireJSON } from "./Attire";
 
 type BoardState = {
   header: CellLocation;

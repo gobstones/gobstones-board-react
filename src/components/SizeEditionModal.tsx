@@ -5,7 +5,7 @@ import { randomInt } from "../utils/random";
 import { CellLocation } from "./BoardComponent";
 import { ThemeSelect } from "./ThemeSelect";
 import { useTranslation } from "react-i18next";
-import gearImgSrc from "../gear.png";
+import gearImgSrc from "../img/gear.png";
 
 interface Props {
   initialRows: number;

@@ -25,7 +25,7 @@ type CellProps = {
   attire: AttireContent;
 };
 
-export default class Cell extends React.Component<CellProps, CellState> {
+export class Cell extends React.Component<CellProps, CellState> {
   constructor(props: any) {
     super(props);
     this.state = {
