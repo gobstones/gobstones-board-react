@@ -1,3 +1,3 @@
-import { BoardComponent } from "./lib";
+import { BoardComponent } from "./components";
 
 export { BoardComponent };

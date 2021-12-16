@@ -4,7 +4,7 @@ import "./style/board.css";
 import "./style/cell.css";
 import "./style/stone.css";
 import { CellInfo } from "@gobstones/gobstones-gbb-parser";
-import { BoardComponent } from "./lib/BoardComponent";
+import { BoardComponent } from "./components/BoardComponent";
 
 const App: React.FC = () => {
   let boardInfo: CellInfo[][] = new Array(5);

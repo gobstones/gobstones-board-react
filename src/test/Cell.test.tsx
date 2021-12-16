@@ -1,7 +1,7 @@
 import React from "react";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Cell from "../lib/Cell";
+import Cell from "../components/Cell";
 
 let cellInfo: { a: number; r: number; v: number; n: number };
 let blueClickedFunction: jest.Mock<any, any>;

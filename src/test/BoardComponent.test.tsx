@@ -1,6 +1,6 @@
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import { BoardComponent } from "../lib/BoardComponent";
+import { BoardComponent } from "../components/BoardComponent";
 import "@testing-library/jest-dom";
 
 describe("BoardComponent", () => {

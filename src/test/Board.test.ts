@@ -1,6 +1,6 @@
-import { Board } from "../lib/Board";
-import EditableBoard from "../lib/EditableBoard";
-import { StaticBoard } from "../lib/StaticBoard";
+import { Board } from "../components/Board";
+import EditableBoard from "../components/EditableBoard";
+import { StaticBoard } from "../components/StaticBoard";
 
 describe("Board", () => {
   test("A board is created with a columns quantity, a rows quantity", () => {

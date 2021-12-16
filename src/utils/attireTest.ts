@@ -1,4 +1,4 @@
-import { AttireJSON } from "../lib/Attire";
+import { AttireJSON } from "../components/Attire";
 export const attireTest: AttireJSON = {
   enabled: true,
   rules: [
