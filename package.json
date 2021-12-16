@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gs-board-tsx",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Gobstones board",
   "repository": "https://github.com/gobstones/gobstones-board-react",
   "author": "Federico Sawady <sawady.faso@gmail.com>",
